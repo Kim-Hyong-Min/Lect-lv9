@@ -14,6 +14,7 @@ public class BankManager {
 	
 	public void run() {
 		// 실행 시작
+		fm.load();
 		boolean isRun = true;
 		while(isRun) {
 			System.out.println(Bank.getName() + "ATM");

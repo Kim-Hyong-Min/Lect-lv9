@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 
+import models.Account;
+import models.User;
+
 public class FileManager {
 	File file = new File("Bank.txt");
 	private UserManager um = UserManager.instance;
@@ -49,7 +52,15 @@ public class FileManager {
 					for(int i=0; i<Integer.parseInt(UserNum); i++) {
 						String temp = br.readLine();
 						String tempArr[] = temp.split("/");
-						
+						User User = new User(Integer.parseInt(tempArr[0]), tempArr[1], tempArr[2], tempArr[3]);
+						this.um.users.add(User);
+						if(Integer.parseInt(tempArr[4])>0) {
+							for(int j=0; j<Integer.parseInt(tempArr[4]); j++) {
+								Account ac = new Account(Integer.parseInt(tempArr[5+j*2]));
+								this.um.users.get(i).getAccounts().add(ac);
+								this.um.users.get(i).getAccounts().get(j).setMoney(Integer.parseInt(tempArr[6+j*2])-10000);
+							}
+						}
 					}
 				}
 				fr.close();
