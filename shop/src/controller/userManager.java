@@ -1,13 +1,11 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import models.shop;
 import models.user;
 
 public class userManager {
-	private Random rn = new Random();
 	public static userManager instance = new userManager();
 	private shopManager sm = shopManager.instance;
 	private ArrayList<user>users = new ArrayList<>();
@@ -29,7 +27,7 @@ public class userManager {
 		String pw = shop.sc.next();
 		
 		if(this.users.size()==0) {
-			int rNum = rn.nextInt(8999)+1000;//코드부여
+			int rNum = shop.rn.nextInt(8999)+1000;//코드부여
 			user data = new user(id,pw,rNum);
 			this.users.add(data);
 			System.out.println("가입 완료!");
@@ -48,7 +46,7 @@ public class userManager {
 		}
 		if(check == -1) {
 			while(true) {
-				int rNum = rn.nextInt(8999)+1000;//코드부여
+				int rNum = shop.rn.nextInt(8999)+1000;//코드부여
 				int rNumCheck = -1;
 				for(int i=0; i<this.users.size(); i++) {
 					if(this.users.get(i).getUserCode()==rNum){
@@ -84,7 +82,6 @@ public class userManager {
 				if(check != -1 && this.users.get(check).getPw().equals(pw)) {
 					shop.log=check;
 					System.out.println(id+"님 로그인 성공!");
-					sm.setCnt(1);
 				}
 				else System.out.println("아이디나 비밀번호를 다시 확인해주세요.");
 				
@@ -92,6 +89,10 @@ public class userManager {
 			else System.out.println("가입된 인원이 없습니다.");
 		}
 		else System.out.println("로그인 중입니다.");
+	}
+	
+	public void printLoginUser() {
+		System.out.println(this.users.get(shop.log).getId()+"님 로그인중...");
 	}
 	
 	//로그아웃

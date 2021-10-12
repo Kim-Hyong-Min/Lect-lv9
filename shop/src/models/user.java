@@ -6,7 +6,6 @@ public class user {
 	private int userCode;
 	private String id;
 	private String pw;
-	ArrayList<item>jjang = new ArrayList<>();
 	
 	private user() {
 	}
