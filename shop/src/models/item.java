@@ -49,12 +49,13 @@ public class item {
 		this.categoryCode = categoryCode;
 	}
 	
-	public item(items items) {
-		this.list.add(items);
-	}
 	
 	public String getCategory() {
 		return this.category;
+	}
+	
+	public ArrayList getList() {
+		return this.list;
 	}
 	
 	public int getCategoryCode() {
@@ -65,5 +66,28 @@ public class item {
 		return this.list.size();
 	}
 	
+	public String getItems(int idx) {
+		return this.list.get(idx).getItems();
+	}
 	
+	public int getItemCode(int idx) {
+		return this.list.get(idx).getItemCode();
+	}
+	
+	public int getPrice(int idx) {
+		return this.list.get(idx).getPrice();
+	}
+	
+	public int getCnt(int idx) {
+		return this.list.get(idx).getCnt();
+	}
+	
+	public void setItem(String items, int price, int cnt, int itemCode) {
+		items data = new items(items, price, cnt, itemCode);
+		this.list.add(data);
+	}
+	
+	public void setItem(int idx) {
+		this.list.remove(idx);
+	}
 }

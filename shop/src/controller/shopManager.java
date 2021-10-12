@@ -6,6 +6,7 @@ public class shopManager {
 	private int cnt = -1;
 	public static shopManager instance = new shopManager();
 	private userManager um = userManager.instance;
+	private itemManager im = itemManager.instance;
 	
 	//실행
 	public void run() {
@@ -57,7 +58,7 @@ public class shopManager {
 					shoppingIn();
 				}
 				else if(num == 6) {//관리자
-					
+					im.manageMenu();
 				}
 				else if(num == 7) {//종료
 					
