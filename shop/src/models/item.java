@@ -11,7 +11,7 @@ class items {
 	private items() {
 	}
 	
-	public items(String items, int price, int cnt, int itemCode) {
+	public items(String items, int cnt, int price, int itemCode) {
 		this.items = items;
 		this.price = price;
 		this.cnt = cnt;
@@ -34,6 +34,9 @@ class items {
 		return this.cnt;
 	}
 	
+	public void setCnt(int num) {
+		this.cnt += num;
+	}
 }
 
 public class item {
@@ -80,6 +83,10 @@ public class item {
 	
 	public int getCnt(int idx) {
 		return this.list.get(idx).getCnt();
+	}
+	
+	public void setCnt(int idx, int num) {
+		this.list.get(idx).setCnt(num);
 	}
 	
 	public void setItem(String items, int price, int cnt, int itemCode) {

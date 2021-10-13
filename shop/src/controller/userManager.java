@@ -9,8 +9,12 @@ import models.user;
 public class userManager {
 	public static userManager instance = new userManager();
 	private shopManager sm = shopManager.instance;
-	private ArrayList<user>users = new ArrayList<>();
-	private ArrayList<cart>cart = new ArrayList<>();
+	ArrayList<user>users = new ArrayList<>();
+	ArrayList<cart>cart = new ArrayList<>();
+	
+	public int getUserCode() {
+		return this.users.get(shop.log).getUserCode();
+	}
 	
 	//∞°¿‘
 	public void check() {

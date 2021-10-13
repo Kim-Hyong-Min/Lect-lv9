@@ -1,5 +1,6 @@
 package controller;
 
+import models.cart;
 import models.shop;
 
 public class shopManager {
@@ -67,10 +68,10 @@ public class shopManager {
 			}
 			else{
 				if(num == 1) { //쇼핑
-					
+					shopping();
 				}
 				else if(num == 2) {//장바구니 목록
-					
+					cartMenu();
 				}
 				else if(num == 3) {//뒤로가기
 					this.cnt=-1;
@@ -139,7 +140,7 @@ public class shopManager {
 		System.out.println("["+im.items.get(idx).getCategory()+"]");
 		System.out.println("[상품목록]");
 		for(int i=0; i<im.items.get(idx).getList().size(); i++) {// 상품 목록
-			System.out.println((i+1)+". ["+im.items.get(idx).getItems(i)+"]");
+			System.out.println((i+1)+". ["+im.items.get(idx).getItems(i)+"] 수량 : "+im.items.get(idx).getCnt(i)+"개 / 가격 : "+im.items.get(idx).getPrice(i)+"원");
 		}
 		System.out.println((im.items.get(idx).getListSize()+1)+".[뒤로가기]");
 		System.out.print("번호 입력 : ");
@@ -153,7 +154,9 @@ public class shopManager {
 			int num = Integer.parseInt(menu);
 			
 			if(num>0 && num<=im.items.get(cateIdx).getCnt(itemIdx)) {
-				
+				cart addItem = new cart(im.items.get(cateIdx).getItems(itemIdx), um.getUserCode(), im.items.get(cateIdx).getCategoryCode(), im.items.get(cateIdx).getItemCode(itemIdx), num, im.items.get(cateIdx).getPrice(itemIdx));
+				im.items.get(cateIdx).setCnt(itemIdx, -num);// 상품 수량 감소
+				um.cart.add(addItem);
 			}
 			else System.out.println("잘못된 수량 입니다.");
 			
@@ -161,5 +164,69 @@ public class shopManager {
 		}
 	}
 	// 장바구니 목록
-	// 장바구니 메뉴 - 장바구니 보기, 결제하기, 상품 제거
+	public void cartMenu() {
+		System.out.println("1.장바구니 보기\n2.결제하기\n3.상품 제거\n4.뒤로가기");
+		String menu = shop.sc.next();
+		try {
+			int num = Integer.parseInt(menu);
+			if(num == 1) { //장바구니 보기
+				cart();
+			}
+			else if(num == 2) {//결제하기
+				
+			}
+			else if(num == 3) {//상품제거
+				
+			}
+			else if(num == 4) {//뒤로가기
+				
+			}
+			
+		}catch (Exception e) {
+		}
+	}
+	
+	//장바구니 보기
+	
+	public void cart() {
+		if(um.cart.size()>0) {
+			printCart();
+		}
+		else System.out.println("장바구니가 비어있습니다.");
+	}
+	
+	public void printCart() {
+		int check = 0;
+		System.out.println("[장바구니]");
+		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
+			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
+				check++;
+				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+			}
+		}
+		if(check==0) System.out.println("장바구니에 상품이 존재하지 않습니다.");
+	}
+	
+	// 결제하기
+	public void cartPaying() {
+		int check = 0;
+		System.out.println("[장바구니]");
+		for(int i=0; i<um.cart.size(); i++) {
+			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
+				check++;
+				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+			}
+		}
+		if(check==0) {
+			System.out.println("장바구니에 상품이 존재하지 않습니다.");
+		}
+		else {
+			System.out.println("현재 장바구니에 있는 상품을 구매 하시겠습니까?");
+		}
+	}
+	
+	
+	// 장바구니 메뉴 - , 결제하기, 상품 제거
+	
+	
 }

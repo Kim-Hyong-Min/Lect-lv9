@@ -3,6 +3,7 @@ package models;
 import java.util.ArrayList;
 
 public class cart {
+	private String items;
 	private int userCode;
 	private int categoryCode;
 	private int itemCode;
@@ -12,7 +13,9 @@ public class cart {
 	
 	private cart (){
 	}
-	public cart (int userCode, int categoryCode, int itemCode , int itemNum, int Price) {
+	
+	public cart (String items, int userCode, int categoryCode, int itemCode , int itemNum, int Price) {
+		this.items = items;
 		this.userCode = userCode;
 		this.categoryCode = categoryCode;
 		this.itemCode = itemCode;
@@ -20,7 +23,29 @@ public class cart {
 		this.totalPrice += Price*itemNum;
 	}
 	
+	public String getItems() {
+		return this.items;
+	}
 	
+	public int getUserCode() {
+		return this.userCode;
+	}
+	
+	public int getCategoryCode() {
+		return this.categoryCode;
+	}
+	
+	public int getItemCode() {
+		return this.itemCode;
+	}
+	
+	public int getItemNum() {
+		return this.itemNum;
+	}
+	
+	public int getTotalPrice() {
+		return this.totalPrice;
+	}
 	//장바구니
 	
 }
