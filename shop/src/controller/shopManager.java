@@ -83,12 +83,83 @@ public class shopManager {
 	
 	
 	// 쇼핑
-	// 카테고리 목록
-	// 카테고리 선택
-	// 상품 목록
-	// 상품 선택
-	// 수량 선택
 	
+	public void shopping() {
+		if(im.items.size()>0) {
+			printShoppingMenu();
+			String menu = shop.sc.next();
+			try {
+				int num = Integer.parseInt(menu)-1;
+				
+				if(num>=0 && num<im.items.size()) {//카테고리 선택
+					itemChoice(num);
+				}
+				else if(num==im.items.size()) {//뒤로가기
+					
+				}
+				else System.out.println("잘못된 입력 입니다.");
+				
+			}catch (Exception e) {
+			}
+			
+		}
+		else System.out.println("저장된 상품이 없습니다.");
+	}
+	
+	public void itemChoice(int idx) {
+		if(im.items.get(idx).getListSize()>0) {
+			printItemMenu(idx);
+			String menu = shop.sc.next();
+			try {
+				int num = Integer.parseInt(menu)-1;
+				if(num>=0 && num<im.items.get(idx).getListSize()) {//아이템 선택
+					itemNumChoice(idx, num);
+				}
+				else if(num==im.items.get(idx).getListSize()) {//뒤로가기
+					
+				}
+				else System.out.println("잘못된 입력 입니다.");
+			}catch (Exception e) {
+			}
+		}
+		else System.out.println("해당 카테고리에 상품이 없습니다.");
+	}
+	
+	public void printShoppingMenu() {
+		System.out.println("[카테고리]");
+		for(int i=0; i<im.items.size(); i++) {// 카테고리 목록
+			System.out.println((i+1)+". ["+im.items.get(i).getCategory()+"]");
+		}
+		System.out.println((im.items.size()+1)+".[뒤로가기]");
+		System.out.print("번호 입력 : ");
+	}
+	
+	// 상품 목록
+	public void printItemMenu(int idx) {
+		System.out.println("["+im.items.get(idx).getCategory()+"]");
+		System.out.println("[상품목록]");
+		for(int i=0; i<im.items.get(idx).getList().size(); i++) {// 상품 목록
+			System.out.println((i+1)+". ["+im.items.get(idx).getItems(i)+"]");
+		}
+		System.out.println((im.items.get(idx).getListSize()+1)+".[뒤로가기]");
+		System.out.print("번호 입력 : ");
+	}
+	
+	// 수량 선택
+	public void itemNumChoice(int cateIdx, int itemIdx) {
+		System.out.print("수량 선택 : ");
+		String menu = shop.sc.next();
+		try {
+			int num = Integer.parseInt(menu);
+			
+			if(num>0 && num<=im.items.get(cateIdx).getCnt(itemIdx)) {
+				
+			}
+			else System.out.println("잘못된 수량 입니다.");
+			
+		}catch (Exception e) {
+		}
+	}
 	// 장바구니 목록
 	// 장바구니 메뉴 - 장바구니 보기, 결제하기, 상품 제거
 }

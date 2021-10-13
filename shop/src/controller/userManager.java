@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import models.cart;
 import models.shop;
 import models.user;
 
@@ -9,6 +10,7 @@ public class userManager {
 	public static userManager instance = new userManager();
 	private shopManager sm = shopManager.instance;
 	private ArrayList<user>users = new ArrayList<>();
+	private ArrayList<cart>cart = new ArrayList<>();
 	
 	//∞°¿‘
 	public void check() {
