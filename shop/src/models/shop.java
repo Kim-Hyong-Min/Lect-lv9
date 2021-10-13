@@ -7,7 +7,7 @@ public class shop {
 	public static Scanner sc = new Scanner(System.in);
 	public static Random rn = new Random();
 	private static String shopName = "¿Ã∏∂∆Æ";
-	private int totalSales;
+	public static int totalSales = 0;
 	public static int log = -1;
 	
 	private shop() {
@@ -21,5 +21,7 @@ public class shop {
 		return this.totalSales;
 	}
 	
-	
+	public static void setTotalSales(int price) {
+		totalSales+=price;
+	}
 }

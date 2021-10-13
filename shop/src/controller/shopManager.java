@@ -8,6 +8,7 @@ public class shopManager {
 	public static shopManager instance = new shopManager();
 	private userManager um = userManager.instance;
 	private itemManager im = itemManager.instance;
+	private fileManager fm = fileManager.instance;
 	
 	//실행
 	public void run() {
@@ -154,15 +155,40 @@ public class shopManager {
 			int num = Integer.parseInt(menu);
 			
 			if(num>0 && num<=im.items.get(cateIdx).getCnt(itemIdx)) {
-				cart addItem = new cart(im.items.get(cateIdx).getItems(itemIdx), um.getUserCode(), im.items.get(cateIdx).getCategoryCode(), im.items.get(cateIdx).getItemCode(itemIdx), num, im.items.get(cateIdx).getPrice(itemIdx));
-				im.items.get(cateIdx).setCnt(itemIdx, -num);// 상품 수량 감소
-				um.cart.add(addItem);
+				if(um.cart.size()==0) {
+					cart addItem = new cart(im.items.get(cateIdx).getItems(itemIdx), um.getUserCode(), im.items.get(cateIdx).getCategoryCode(), im.items.get(cateIdx).getItemCode(itemIdx), num, im.items.get(cateIdx).getPrice(itemIdx));
+					im.items.get(cateIdx).setCnt(itemIdx, -num);// 상품 수량 감소
+					um.cart.add(addItem);
+				}
+				else {
+					sameItemCheck(cateIdx, itemIdx, num);
+				}
 			}
 			else System.out.println("잘못된 수량 입니다.");
 			
 		}catch (Exception e) {
 		}
 	}
+	
+	// 중복 체크
+	public void sameItemCheck(int cateIdx, int itemIdx, int num) {
+		int check = -1;
+		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
+			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode() && um.cart.get(i).getCategoryCode()==im.items.get(cateIdx).getCategoryCode() && um.cart.get(i).getItemCode()==im.items.get(cateIdx).getItemCode(itemIdx)) {
+				im.items.get(cateIdx).setCnt(itemIdx, -num);
+				um.cart.get(i).setItemNum(num);
+				check = i;
+			}
+		}
+		
+		if(check == -1) {
+			cart addItem = new cart(im.items.get(cateIdx).getItems(itemIdx), um.getUserCode(), im.items.get(cateIdx).getCategoryCode(), im.items.get(cateIdx).getItemCode(itemIdx), num, im.items.get(cateIdx).getPrice(itemIdx));
+			im.items.get(cateIdx).setCnt(itemIdx, -num);// 상품 수량 감소
+			um.cart.add(addItem);
+		}
+	}
+	
+	
 	// 장바구니 목록
 	public void cartMenu() {
 		System.out.println("1.장바구니 보기\n2.결제하기\n3.상품 제거\n4.뒤로가기");
@@ -173,10 +199,10 @@ public class shopManager {
 				cart();
 			}
 			else if(num == 2) {//결제하기
-				
+				cartPaying();
 			}
 			else if(num == 3) {//상품제거
-				
+				cartRemove();
 			}
 			else if(num == 4) {//뒤로가기
 				
@@ -221,12 +247,69 @@ public class shopManager {
 			System.out.println("장바구니에 상품이 존재하지 않습니다.");
 		}
 		else {
-			System.out.println("현재 장바구니에 있는 상품을 구매 하시겠습니까?");
+			System.out.println("현재 장바구니에 있는 상품을 구매 하시겠습니까?[Yes:1][No:2]");
+			cartReset();
+		}
+	}
+	
+	public void cartReset() {
+		String menu = shop.sc.next();
+		try {
+			int num = Integer.parseInt(menu);
+			if(num == 1) {
+				int total = 0;
+				for(int i=0; i<um.cart.size(); i++) {
+					if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
+						shop.setTotalSales(um.cart.get(i).getTotalPrice());
+						total+=um.cart.get(i).getTotalPrice();
+						um.cart.remove(i);
+					}
+				}
+				System.out.printf("총 금액 : %d원\n결제 완료!\n",total);
+			}
+			else if(num == 2) {
+				
+			}
+		}catch (Exception e) {
 		}
 	}
 	
 	
-	// 장바구니 메뉴 - , 결제하기, 상품 제거
+	// 장바구니 메뉴 - 상품 제거
+	public void cartRemove() {
+		int check = 0;
+		System.out.println("[장바구니]");
+		for(int i=0; i<um.cart.size(); i++) {
+			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
+				check++;
+				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+			}
+		}
+		System.out.println((check+1)+".[뒤로가기]");
+		if(check==0) {
+			System.out.println("장바구니에 상품이 존재하지 않습니다.");
+		}
+		else {
+			System.out.print("번호 입력 : ");
+			String choice = shop.sc.next();
+			try {
+				int num = Integer.parseInt(choice)-1;
+				if(num>=0 && num<check) {
+					int cnt=0;
+					for(int i=0; i<um.cart.size(); i++) {
+						if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
+							cnt++;
+						}
+					}
+				}
+				else if(num==check) {
+					
+				}
+			}catch (Exception e) {
+			}
+		}
+	}
+	
 	
 	
 }

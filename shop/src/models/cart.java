@@ -46,6 +46,9 @@ public class cart {
 	public int getTotalPrice() {
 		return this.totalPrice;
 	}
-	//장바구니
+	
+	public void setItemNum(int num) {
+		this.itemNum+=num;
+	}
 	
 }
