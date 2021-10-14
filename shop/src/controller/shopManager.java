@@ -320,6 +320,11 @@ public class shopManager {
 					int cnt=0;
 					for(int i=0; i<um.cart.size(); i++) {
 						if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
+							if(num==cnt) {
+								um.cart.remove(i);
+								System.out.println("제거 완료!");
+								break;
+							}
 							cnt++;
 						}
 					}

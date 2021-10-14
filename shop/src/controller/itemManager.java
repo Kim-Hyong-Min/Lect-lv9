@@ -341,17 +341,28 @@ public class itemManager {
 		System.out.println("[장바구니]");
 		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
 				check++;
-				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+				System.out.println(check+". "+um.cart.get(i).getItems()+" / 수량 : "+um.cart.get(i).getItemNum()+"개 / ID : "+getUserId(um.cart.get(i).getUserCode()));
 		}
 		if(check==0) System.out.println("장바구니에 상품이 존재하지 않습니다.");
 	}
+	
+	public String getUserId(int code) {
+		String data = "";
+		for(int i=0; i<um.users.size(); i++) {
+			if(um.users.get(i).getUserCode()==code) {
+				data=um.users.get(i).getId();
+			}
+		}
+		return data;
+	}
+	
 	
 	public void cartRemove() {
 		int check = 0;
 		System.out.println("[장바구니]");
 		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
 				check++;
-				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum()+"/ 유저코드 : "+um.cart.get(i).getUserCode());
+				System.out.println(check+". "+um.cart.get(i).getItems()+" / 수량 : "+um.cart.get(i).getItemNum()+"개 / ID : "+getUserId(um.cart.get(i).getUserCode()));
 		}
 		
 		if(check!=0) {
