@@ -2,15 +2,50 @@
 public class Main {
 // 메인메뉴
 // ㄴ 길드관리, 상점, 인벤토리, 저장, 로드
+	public void run() {
+		while(true) {
+			printMenu();
+		}
+	}
 	
-//	길드관리
-//	ㄴ 길드목록, 길드원추가, 길드원삭제, 파티원교체, 정렬
+	public void printMenu() {
+		System.out.println("1.길드관리\n2.상점\n3.인벤토리\n4.저장\n5.로드\n6.종료");
+	}
+	
+	public void menuInput() {
+		String input = Shop.sc.next();
+		try {
+			int num = Integer.parseInt(input);
+			if(num==1) {//길드관리
+				
+			}
+			else if(num==2) {//상점
+				
+			}
+			else if(num==3) {//인벤토리
+				
+			}
+			else if(num==4) {//저장
+				
+			}
+			else if(num==5) {//로드
+				
+			}
+			else if(num==6) {//종료
+				
+			}
+			
+		} catch (Exception e) {
+		}
+		
+	}
+	
+
 	
 //	번호, 이름, 레벨, 채력, 공격력, 방어력, 파티여부
 	
 	
-//	상점
-//	ㄴ 무기, 갑옷, 반지
+
 	
 //	번호, 이름, 공격력, 가격
 	
