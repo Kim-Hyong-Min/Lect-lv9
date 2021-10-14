@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 import models.item;
 import models.shop;
+import models.user;
 
 public class itemManager {
 	public static itemManager instance = new itemManager();
-	private fileManager fm = fileManager.instance;
 	private userManager um = userManager.instance;
 	private int num = -1;
 	
@@ -146,6 +146,26 @@ public class itemManager {
 		else System.out.println("카테고리가 존재하지 않습니다.");
 	}
 	
+	//카테고리 초기화
+	public void categorySet() {
+		item cate = new item("육류", 111);
+		this.items.add(cate);
+		cate = new item("생선", 222);
+		this.items.add(cate);
+		cate = new item("유제품", 333);
+		this.items.add(cate);
+		cate = new item("가공식품", 444);
+		this.items.add(cate);
+		
+		this.items.get(0).setItem("소고기", 100, 10000, 1111);
+		this.items.get(0).setItem("돼지고기", 100, 20000, 2222);
+		this.items.get(1).setItem("고등어", 100, 5000, 3333);
+		this.items.get(1).setItem("꽁치", 100, 8000, 4444);
+		this.items.get(2).setItem("우유", 100, 3000, 5555);
+		this.items.get(2).setItem("치즈", 100, 2000, 6666);
+		this.items.get(3).setItem("과자", 100, 1000, 7777);
+		this.items.get(3).setItem("음료수", 100, 500, 8888);
+	}
 	
 	//카테고리 추가
 	public void categoryAdd() {
@@ -354,6 +374,5 @@ public class itemManager {
 	public void printTotalMoney() {
 		System.out.println("매출액 : "+shop.totalSales+"원");
 	}
-	
 	
 }

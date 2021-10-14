@@ -9,7 +9,6 @@ import models.user;
 public class userManager {
 	public static userManager instance = new userManager();
 	private shopManager sm = shopManager.instance;
-	private fileManager fm = fileManager.instance;
 	ArrayList<user>users = new ArrayList<>();
 	ArrayList<cart>cart = new ArrayList<>();
 	
@@ -30,7 +29,6 @@ public class userManager {
 			user data = new user(id,pw,rNum);
 			this.users.add(data);
 			System.out.println("가입 완료!");
-			fm.userSave(); // 저장
 		}
 		else {
 			joinUserCheck(id, pw);
@@ -57,7 +55,6 @@ public class userManager {
 					user data = new user(id,pw,rNum);
 					this.users.add(data);
 					System.out.println("가입 완료!");
-					fm.userSave(); // 저장
 					break;
 				}
 			}
@@ -132,9 +129,9 @@ public class userManager {
 		else System.out.println("가입된 인원이 없습니다.");
 	}
 	
-	//관리자모드 - 유저관리 : , 유저추가, 유저삭제
+	// 유저관리
 	
-	public void allUser() {//전체유저
+	public void allUser() { // 전체유저
 		if(this.users.size()>0) {
 			for(int i=0; i<this.users.size(); i++) {
 				System.out.println("유저코드 : "+this.users.get(i).getUserCode()+"/ ID : "+this.users.get(i).getId()+"/ PW : "+this.users.get(i).getPw());

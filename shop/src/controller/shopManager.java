@@ -8,7 +8,6 @@ public class shopManager {
 	public static shopManager instance = new shopManager();
 	private userManager um = userManager.instance;
 	private itemManager im = itemManager.instance;
-	private fileManager fm = fileManager.instance;
 	private int check = -1;
 	//실행
 	
@@ -22,6 +21,7 @@ public class shopManager {
 	}
 	
 	public void run() {
+		im.categorySet();
 		while(finish()) {
 			printMenu();
 			menuSelect();
@@ -99,19 +99,22 @@ public class shopManager {
 	public void shopping() {
 		if(im.items.size()>0) {
 			printShoppingMenu();
-			String menu = shop.sc.next();
-			try {
-				int num = Integer.parseInt(menu)-1;
-				
-				if(num>=0 && num<im.items.size()) {//카테고리 선택
-					itemChoice(num);
-				}
-				else if(num==im.items.size()) {//뒤로가기
+			while(true) {
+				String menu = shop.sc.next();
+				try {
+					int num = Integer.parseInt(menu)-1;
 					
+					if(num>=0 && num<im.items.size()) {//카테고리 선택
+						itemChoice(num);
+						break;
+					}
+					else if(num==im.items.size()) {//뒤로가기
+						break;
+					}
+					else System.out.println("잘못된 입력 입니다.");
+					
+				}catch (Exception e) {
 				}
-				else System.out.println("잘못된 입력 입니다.");
-				
-			}catch (Exception e) {
 			}
 			
 		}
@@ -121,17 +124,20 @@ public class shopManager {
 	public void itemChoice(int idx) {
 		if(im.items.get(idx).getListSize()>0) {
 			printItemMenu(idx);
+			while(true) {
 			String menu = shop.sc.next();
 			try {
 				int num = Integer.parseInt(menu)-1;
 				if(num>=0 && num<im.items.get(idx).getListSize()) {//아이템 선택
 					itemNumChoice(idx, num);
+					break;
 				}
 				else if(num==im.items.get(idx).getListSize()) {//뒤로가기
-					
+					break;
 				}
 				else System.out.println("잘못된 입력 입니다.");
 			}catch (Exception e) {
+			}
 			}
 		}
 		else System.out.println("해당 카테고리에 상품이 없습니다.");
@@ -169,6 +175,7 @@ public class shopManager {
 					cart addItem = new cart(im.items.get(cateIdx).getItems(itemIdx), um.getUserCode(), im.items.get(cateIdx).getCategoryCode(), im.items.get(cateIdx).getItemCode(itemIdx), num, im.items.get(cateIdx).getPrice(itemIdx));
 					im.items.get(cateIdx).setCnt(itemIdx, -num);// 상품 수량 감소
 					um.cart.add(addItem);
+					System.out.println("상품을 담았습니다!");
 				}
 				else {
 					sameItemCheck(cateIdx, itemIdx, num);
@@ -202,23 +209,28 @@ public class shopManager {
 	// 장바구니 목록
 	public void cartMenu() {
 		System.out.println("1.장바구니 보기\n2.결제하기\n3.상품 제거\n4.뒤로가기");
-		String menu = shop.sc.next();
-		try {
-			int num = Integer.parseInt(menu);
-			if(num == 1) { //장바구니 보기
-				cart();
-			}
-			else if(num == 2) {//결제하기
-				cartPaying();
-			}
-			else if(num == 3) {//상품제거
-				cartRemove();
-			}
-			else if(num == 4) {//뒤로가기
+		while(true) {
+			String menu = shop.sc.next();
+			try {
+				int num = Integer.parseInt(menu);
+				if(num == 1) { //장바구니 보기
+					cart();
+					break;
+				}
+				else if(num == 2) {//결제하기
+					cartPaying();
+					break;
+				}
+				else if(num == 3) {//상품제거
+					cartRemove();
+					break;
+				}
+				else if(num == 4) {//뒤로가기
+					break;
+				}
 				
+			}catch (Exception e) {
 			}
-			
-		}catch (Exception e) {
 		}
 	}
 	
@@ -237,7 +249,7 @@ public class shopManager {
 		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
 			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
 				check++;
-				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+				System.out.println(check+". 품명 : "+um.cart.get(i).getItems()+"/ 수량 : "+um.cart.get(i).getItemNum()+"/ 가격 : "+um.cart.get(i).getTotalPrice());
 			}
 		}
 		if(check==0) System.out.println("장바구니에 상품이 존재하지 않습니다.");
@@ -250,7 +262,7 @@ public class shopManager {
 		for(int i=0; i<um.cart.size(); i++) {
 			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
 				check++;
-				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+				System.out.println(check+". 품명 : "+um.cart.get(i).getItems()+"/ 수량 : "+um.cart.get(i).getItemNum()+"/ 가격 : "+um.cart.get(i).getTotalPrice());
 			}
 		}
 		if(check==0) {
@@ -292,7 +304,7 @@ public class shopManager {
 		for(int i=0; i<um.cart.size(); i++) {
 			if(um.cart.get(i).getUserCode()==um.users.get(shop.log).getUserCode()) {
 				check++;
-				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+				System.out.println(check+". 품명 : "+um.cart.get(i).getItems()+"/ 수량 : "+um.cart.get(i).getItemNum()+"/ 가격 : "+um.cart.get(i).getTotalPrice());
 			}
 		}
 		System.out.println((check+1)+".[뒤로가기]");
