@@ -7,6 +7,8 @@ import models.shop;
 
 public class itemManager {
 	public static itemManager instance = new itemManager();
+	private fileManager fm = fileManager.instance;
+	private userManager um = userManager.instance;
 	private int num = -1;
 	
 	ArrayList<item>items = new ArrayList<>();
@@ -27,7 +29,10 @@ public class itemManager {
 					else if(num == 3) { //장바구니 관리
 						this.num=3;
 					}
-					else if(num == 4) { //뒤로가기
+					else if(num == 4) { //유저 관리
+						this.num=4;
+					}
+					else if(num == 5) { //뒤로가기
 						break;
 					}
 					
@@ -75,14 +80,33 @@ public class itemManager {
 			else if(this.num==3){
 				try {
 					int num = Integer.parseInt(menu);
-					if(num == 1) { //장바구니 추가
-						
+					if(num == 1) { // 전체 장바구니
+						printAllCart();
 					}
-					else if(num == 2) { //장바구니 삭제
-						
+					else if(num == 2) { // 장바구니 삭제
+						cartRemove();
 					}
-					else if(num == 3) { //장바구니 관리
-						
+					else if(num == 3) { // 전체 매출
+						printTotalMoney();
+					}
+					else if(num == 4) { //뒤로가기
+						this.num = -1;
+					}
+					
+				}catch (Exception e) {
+				}
+			}
+			else if(this.num==4){
+				try {
+					int num = Integer.parseInt(menu);
+					if(num == 1) { // 전체 유저
+						um.allUser();
+					}
+					else if(num == 2) { // 유저 추가
+						um.joinUser();
+					}
+					else if(num == 3) { // 유저 삭제
+						um.userRemove();
 					}
 					else if(num == 4) { //뒤로가기
 						this.num = -1;
@@ -96,7 +120,7 @@ public class itemManager {
 	
 	public void printManage() {
 		if(this.num==-1) {
-			System.out.println("1.카테고리 관리\n2.아이템 관리\n3.장바구니 관리\n4.뒤로가기");
+			System.out.println("1.카테고리 관리\n2.아이템 관리\n3.미결제 상품 및 매출 관리\n4.유저 관리\n5.뒤로가기");
 		}
 		else if(this.num==1) {
 			System.out.println("1.카테고리 추가\n2.카테고리 삭제\n3.전체 카테고리\n4.뒤로가기");
@@ -105,7 +129,10 @@ public class itemManager {
 			System.out.println("1.아이템 추가\n2.아이템 삭제\n3.전체 아이템\n4.뒤로가기");
 		}
 		else if(this.num==3) {
-			System.out.println("1.장바구니 추가\n2.장바구니 삭제\n3.전체 장바구니\n4.뒤로가기");
+			System.out.println("1.전체 장바구니\n2.장바구니 삭제\n3.전체 매출\n4.뒤로가기");
+		}
+		else if(this.num==4) {
+			System.out.println("1.전체 유저\n2.유저 추가\n3.유저 삭제\n4.뒤로가기");
 		}
 	}
 	
@@ -288,6 +315,45 @@ public class itemManager {
 	}
 		
 	//장바구니 관리 - 전체 장바구니, 전체 매출액, 
+	
+	public void printAllCart() {
+		int check = 0;
+		System.out.println("[장바구니]");
+		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
+				check++;
+				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum());
+		}
+		if(check==0) System.out.println("장바구니에 상품이 존재하지 않습니다.");
+	}
+	
+	public void cartRemove() {
+		int check = 0;
+		System.out.println("[장바구니]");
+		for(int i=0; i<um.cart.size(); i++) {// 장바구니 목록
+				check++;
+				System.out.println(check+um.cart.get(i).getItems()+" 수량 : "+um.cart.get(i).getItemNum()+"/ 유저코드 : "+um.cart.get(i).getUserCode());
+		}
+		
+		if(check!=0) {
+			String idx = shop.sc.next();
+			try {
+				int num = Integer.parseInt(idx)-1;
+				if(num>=0 && num<um.cart.size()) {
+					um.cart.remove(num);
+					System.out.println("삭제 완료");
+				}
+				
+			}catch (Exception e) {
+			}
+		}
+		else {
+			System.out.println("장바구니에 상품이 존재하지 않습니다.");
+		}
+	}
+	
+	public void printTotalMoney() {
+		System.out.println("매출액 : "+shop.totalSales+"원");
+	}
 	
 	
 }

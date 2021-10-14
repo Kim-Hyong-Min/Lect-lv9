@@ -9,6 +9,7 @@ import models.user;
 public class userManager {
 	public static userManager instance = new userManager();
 	private shopManager sm = shopManager.instance;
+	private fileManager fm = fileManager.instance;
 	ArrayList<user>users = new ArrayList<>();
 	ArrayList<cart>cart = new ArrayList<>();
 	
@@ -17,14 +18,6 @@ public class userManager {
 	}
 	
 	//가입
-	public void check() {
-		System.out.println(this.users.size());
-		if(this.users.size()>0) {
-			for(int i=0; i<this.users.size(); i++) {
-				System.out.println(this.users.get(i).getId()+"/"+this.users.get(i).getUserCode());
-			}
-		}
-	}
 	
 	public void joinUser() {
 		System.out.print("ID 입력 : ");
@@ -37,6 +30,7 @@ public class userManager {
 			user data = new user(id,pw,rNum);
 			this.users.add(data);
 			System.out.println("가입 완료!");
+			fm.userSave(); // 저장
 		}
 		else {
 			joinUserCheck(id, pw);
@@ -63,6 +57,7 @@ public class userManager {
 					user data = new user(id,pw,rNum);
 					this.users.add(data);
 					System.out.println("가입 완료!");
+					fm.userSave(); // 저장
 					break;
 				}
 			}
@@ -137,5 +132,46 @@ public class userManager {
 		else System.out.println("가입된 인원이 없습니다.");
 	}
 	
-	//관리자모드 - 유저관리 : 전체유저, 유저추가, 유저삭제
+	//관리자모드 - 유저관리 : , 유저추가, 유저삭제
+	
+	public void allUser() {//전체유저
+		if(this.users.size()>0) {
+			for(int i=0; i<this.users.size(); i++) {
+				System.out.println("유저코드 : "+this.users.get(i).getUserCode()+"/ ID : "+this.users.get(i).getId()+"/ PW : "+this.users.get(i).getPw());
+			}
+		}
+		else System.out.println("가입된 인원이 없습니다.");
+	}
+	
+	
+	public void userRemove() { // 유저삭제
+		if(this.users.size()>0) {
+			for(int i=0; i<this.users.size(); i++) {
+				System.out.println((i+1)+". 유저코드 : "+this.users.get(i).getUserCode()+"/ ID : "+this.users.get(i).getId()+"/ PW : "+this.users.get(i).getPw());
+			}
+			System.out.print("번호 입력 : ");
+			String idx = shop.sc.next();
+			try {
+				int num = Integer.parseInt(idx)-1;
+				if(num>=0 && num<this.users.size()) {
+					cartRemove(num);
+					this.users.remove(num);
+					System.out.println("삭제 완료!");
+				}
+				else System.out.println("잘못된 번호 입니다.");
+			}catch (Exception e) {
+			}
+		}
+		else System.out.println("가입된 인원이 없습니다.");
+	}
+	
+	public void cartRemove(int number) {
+		for(int i=0; i<cart.size(); i++) {
+			if(this.users.get(number).getUserCode() == cart.get(i).getUserCode()) {
+				cart.remove(i);
+			}
+		}
+	}
+	
+	
 }

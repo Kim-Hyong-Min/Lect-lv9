@@ -9,19 +9,28 @@ public class shopManager {
 	private userManager um = userManager.instance;
 	private itemManager im = itemManager.instance;
 	private fileManager fm = fileManager.instance;
-	
+	private int check = -1;
 	//실행
+	
+	private boolean finish() {
+		if(this.check==-1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public void run() {
-		while(true) {
+		while(finish()) {
 			printMenu();
 			menuSelect();
 		}
 	}
 	//메뉴
 	private void printMenu() {
+
 		System.out.println("===="+shop.getName()+"====");
-		um.check();                                          //가입 검사문
-		System.out.println(cnt);
 		if(shop.log!=-1) um.printLoginUser();
 		if(this.cnt==-1) {
 			System.out.println("1.가입\n2.탈퇴\n3.로그인\n4.로그아웃\n5.쇼핑 매뉴\n6.관리자\n7.종료");
@@ -60,10 +69,11 @@ public class shopManager {
 					shoppingIn();
 				}
 				else if(num == 6) {//관리자
+					shop.log = -1;
 					im.manageMenu();
 				}
 				else if(num == 7) {//종료
-					
+					this.check = 1;
 				}
 				
 			}

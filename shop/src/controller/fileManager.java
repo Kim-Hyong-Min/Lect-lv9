@@ -74,7 +74,8 @@ public class fileManager {
 	}
 	
 	//저장
-	public void save() {
+	
+	public void userSave() {
 		String data = userDataSet();
 		
 		try { // 유저 정보
@@ -83,8 +84,10 @@ public class fileManager {
 			fw.close();
 		} catch (Exception e) {
 		}
-		
-		data = cartDataSet();
+	}
+	
+	public void cartSave() {
+		String data = cartDataSet();
 		
 		try { // 장바구니 정보
 			fw = new FileWriter(cartFile);
@@ -92,8 +95,10 @@ public class fileManager {
 			fw.close();
 		} catch (Exception e) {
 		}
-		
-		data = shopDataSet();
+	}
+	
+	public void shopSave() {
+		String data = shopDataSet();
 		
 		try { // 상점,카테고리,아이템 정보
 			fw = new FileWriter(shopFile);
