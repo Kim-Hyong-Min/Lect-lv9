@@ -32,7 +32,7 @@ public class Main {
 				sp.shopMenu();
 			}
 			else if(num==3) {//인벤토리
-				
+				gd.inventoryMenu();
 			}
 			else if(num==4) {//저장
 				
