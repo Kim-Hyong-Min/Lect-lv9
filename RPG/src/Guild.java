@@ -46,10 +46,8 @@ public class Guild {
 		
 	}
 	
-	public void party() {//파티원 설정
-		//파티원 추가
-		//파티원 삭제
-		//파티원 보기
+	public void party() {//자동파티
+		//4명설정
 	}
 	
 	public void guildLineup() {//정렬
