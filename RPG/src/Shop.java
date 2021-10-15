@@ -3,25 +3,25 @@ import java.util.Scanner;
 public class Shop {
 	public static Scanner sc = new Scanner(System.in);
 	
-//	»óÁ¡
-//	¤¤ ¹«±â, °©¿Ê, ¹İÁö
+//	ìƒì 
+//	ã„´ ë¬´ê¸°, ê°‘ì˜·, ë°˜ì§€
 	
 	public void shopMenu() {
 		while(true) {
-			System.out.println("1.¹«±â\n2.°©¿Ê\n3.¹İÁö\n4.µÚ·Î°¡±â");
+			System.out.println("1.ë¬´ê¸°\n2.ê°‘ì˜·\n3.ë°˜ì§€\n4.ë’¤ë¡œê°€ê¸°");
 			String input = Shop.sc.next();
 			try {
 				int num = Integer.parseInt(input);
-				if(num==1) {//¹«±â
+				if(num==1) {//ë¬´ê¸°
 					
 				}
-				else if(num==2) {//°©¿Ê
+				else if(num==2) {//ê°‘ì˜·
 					
 				}
-				else if(num==3) {//¹İÁö
+				else if(num==3) {//ë°˜ì§€
 					
 				}
-				else if(num==4) {//µÚ·Î°¡±â
+				else if(num==4) {//ë’¤ë¡œê°€ê¸°
 					
 				}
 				
@@ -29,5 +29,17 @@ public class Shop {
 			}
 			
 		}
+	}
+	
+	public void weapon() {//ë¬´ê¸°
+		
+	}
+	
+	public void armor() {//ê°‘ì˜·
+		
+	}
+	
+	public void ring() {//ë°˜ì§€
+		
 	}
 }
