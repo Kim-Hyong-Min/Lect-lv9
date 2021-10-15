@@ -4,6 +4,6 @@ public class Item {
 	private int atk;
 	private int def;
 	private int price;
-	
+	private int itemCode;
 
 }
