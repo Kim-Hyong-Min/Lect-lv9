@@ -1,6 +1,6 @@
 
 public class Player {
-//ÀÌ¸§, ·¹º§, ÇöÀç Ã¼·Â, ÃÖ´ë Ã¼·Â, °ø°İ·Â, ¹æ¾î·Â, °æÇèÄ¡, ÆÄÆ¼¿©ºÎ
+//ì´ë¦„, ë ˆë²¨, í˜„ì¬ ì²´ë ¥, ìµœëŒ€ ì²´ë ¥, ê³µê²©ë ¥, ë°©ì–´ë ¥, ê²½í—˜ì¹˜, íŒŒí‹°ì—¬ë¶€
 	private String name;
 	private int level;
 	private int hp;
@@ -9,5 +9,6 @@ public class Player {
 	private int def;
 	private int exp;
 	private boolean party;
+	private int playerCode;
 	
 }
