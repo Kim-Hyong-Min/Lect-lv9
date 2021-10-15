@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class Guild {
 	public static Guild instance = new Guild();
+	private Unit ut = Unit.instance;
 	ArrayList<Inventory> inven = new ArrayList<>();
 	private String gulidName;
 	private int playerCode;
@@ -76,7 +77,7 @@ public class Guild {
 					guildLineup();
 				}
 				else if(num==5) {//뒤로가기
-					
+					break;
 				}
 				
 			} catch (Exception e) {
@@ -144,15 +145,18 @@ public class Guild {
 	
 	
 	public void guildList() {//길드원 목록
-		
+		System.out.println("====================================================================");
+		System.out.printf("전체 길드원 : %d명\n",ut.player.size());
+		ut.allPlayer();
+		System.out.println("====================================================================");
 	}
 	
 	public void guildAdd() {//길드원 영입
-		
+		ut.playerAdd();
 	}
 	
 	public void guildRemove() {//길드원 해고
-		
+		ut.playerRemove();
 	}
 	
 	public void party() {//자동파티
