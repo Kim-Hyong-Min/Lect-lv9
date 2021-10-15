@@ -19,6 +19,14 @@ public class Unit {
 		this.player.add(py);
 	}
 	
+	public void partyCheck() {
+		int cnt = 0;
+		while(true) {
+			int rNum = Main.rn.nextInt(this.player.size());
+			if()
+		}
+	}
+	
 	public void playerAdd() {
 		String first[] = {"김", "이", "최", "박", "정", "한", "진", "고", "유"};
 		String midle[] = {"영", "상", "명", "문", "민", "형", "기", "우", "기"};
@@ -102,6 +110,36 @@ public class Unit {
 			this.player.get(i).printPlayer();
 		}
 	}
+	
+	public void PlayerItemAdd() {
+		Main.gd.itemList();
+		System.out.printf("(%d)뒤로가기\n",(Main.gd.inven.size()+1));
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int num = Integer.parseInt(input)-1;
+			if(num>=0 && num < Main.gd.inven.size()) {
+				
+				break;
+			}
+			else if(num==Main.gd.inven.size()) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
+	}
+	
+	public void PlayerItemCheck() {
+		
+	}
+	
+	public void PlayerItemRemove() {
+		
+	}
+	
 	
 	
 }
