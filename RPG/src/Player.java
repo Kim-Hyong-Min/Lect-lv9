@@ -10,5 +10,6 @@ public class Player {
 	private int exp;
 	private boolean party;
 	private int playerCode;
-	
+	private int[] playerItem = new int[3]; // 0:무기 / 1:갑옷 / 2:반지
+	// 사망시 장비 인벤토리로 귀속
 }
