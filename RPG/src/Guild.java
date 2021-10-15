@@ -1,11 +1,25 @@
+import java.util.ArrayList;
 
 public class Guild {
+	ArrayList<Inventory> inven = new ArrayList<>();
+	private String gulidName;
 	private int playerCode;
+	private int guildMoney;
+	private final int maxParty = 4;
+	
+	public void guildTitle() {
+		System.out.printf("========[%s]========\n",this.gulidName);
+	}
+	
+	public void printGuildMoney() {
+		System.out.printf("길드 보유금액 : %dg\n",this.guildMoney);
+	}
+	
 //	길드관리
 //	ㄴ 길드목록, 길드원추가, 길드원삭제, 파티원교체, 정렬
 	public void guildMenu() {
 		while(true) {
-			System.out.println("1.길드원 목록\n2.길드원 영입\n3.길드원 해고\n4.파티원 설정\n5.정렬\n6.뒤로가기");
+			System.out.println("1.길드원 목록\n2.길드원 영입\n3.길드원 해고\n4.정렬\n5.뒤로가기");
 			String input = Shop.sc.next();
 			try {
 				int num = Integer.parseInt(input);
@@ -18,13 +32,10 @@ public class Guild {
 				else if(num==3) {//길드원 해고
 					guildRemove();
 				}
-				else if(num==4) {//파티원 설정
-					party();
-				}
-				else if(num==5) {//정렬
+				else if(num==4) {//정렬
 					guildLineup();
 				}
-				else if(num==6) {//뒤로가기
+				else if(num==5) {//뒤로가기
 					
 				}
 				
@@ -33,6 +44,22 @@ public class Guild {
 			
 		}
 	}
+	
+	
+	public void guildSet(){ // 길드 아이템 리스트
+		this.gulidName = "그린컴퓨터";
+		this.guildMoney = 100000;
+	}
+	
+	public void itemList(){ // 길드 아이템 리스트
+		
+	}
+	  
+	public void playerItem(){
+		
+	}
+	
+	
 	
 	public void guildList() {//길드원 목록
 		
