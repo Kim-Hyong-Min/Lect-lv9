@@ -1,14 +1,29 @@
 
 public class Inventory {
-  private int itemCode
-  private int playerCode;
+	private int itemCode;
+	private int itemCnt;
+	private int playerCode;
   
-  public void itemList(){ //보유 아이템
-    
+  Inventory(){
   }
   
-  public void playerItem(){//유저 장비 장착/해제
-    
+  public Inventory(int itemCode, int itemCnt) {//첫구매
+	  this.itemCode = itemCode;
+	  this.itemCnt = itemCnt;
   }
+  
+  public int getItemCode() {
+	  return this.itemCode;
+  }
+  
+  public int getItemCnt() {
+	  return this.itemCnt;
+  }
+  
+  public void setItemCnt(int num) {
+	  this.itemCnt += num;
+  }
+  
+
     
 }
