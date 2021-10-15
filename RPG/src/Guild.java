@@ -1,30 +1,30 @@
 
 public class Guild {
-	
-//	±æµå°ü¸®
-//	¤¤ ±æµå¸ñ·Ï, ±æµå¿øÃß°¡, ±æµå¿ø»èÁ¦, ÆÄÆ¼¿ø±³Ã¼, Á¤·Ä
+	private int playerCode;
+//	ê¸¸ë“œê´€ë¦¬
+//	ã„´ ê¸¸ë“œëª©ë¡, ê¸¸ë“œì›ì¶”ê°€, ê¸¸ë“œì›ì‚­ì œ, íŒŒí‹°ì›êµì²´, ì •ë ¬
 	public void guildMenu() {
 		while(true) {
-			System.out.println("1.±æµå¿ø ¸ñ·Ï\n2.±æµå¿ø ¿µÀÔ\n3.±æµå¿ø ÇØ°í\n4.ÆÄÆ¼¿ø ±³Ã¼\n5.Á¤·Ä\n6.µÚ·Î°¡±â");
+			System.out.println("1.ê¸¸ë“œì› ëª©ë¡\n2.ê¸¸ë“œì› ì˜ì…\n3.ê¸¸ë“œì› í•´ê³ \n4.íŒŒí‹°ì› ì„¤ì •\n5.ì •ë ¬\n6.ë’¤ë¡œê°€ê¸°");
 			String input = Shop.sc.next();
 			try {
 				int num = Integer.parseInt(input);
-				if(num==1) {//±æµå¿ø ¸ñ·Ï
-					
+				if(num==1) {//ê¸¸ë“œì› ëª©ë¡
+					guildList();
 				}
-				else if(num==2) {//±æµå¿ø ¿µÀÔ
-					
+				else if(num==2) {//ê¸¸ë“œì› ì˜ì…
+					guildAdd();
 				}
-				else if(num==3) {//±æµå¿ø ÇØ°í
-					
+				else if(num==3) {//ê¸¸ë“œì› í•´ê³ 
+					guildRemove();
 				}
-				else if(num==4) {//ÆÄÆ¼¿ø ±³Ã¼
-					
+				else if(num==4) {//íŒŒí‹°ì› ì„¤ì •
+					party();
 				}
-				else if(num==5) {//Á¤·Ä
-					
+				else if(num==5) {//ì •ë ¬
+					guildLineup();
 				}
-				else if(num==6) {//µÚ·Î°¡±â
+				else if(num==6) {//ë’¤ë¡œê°€ê¸°
 					
 				}
 				
@@ -34,5 +34,25 @@ public class Guild {
 		}
 	}
 	
+	public void guildList() {//ê¸¸ë“œì› ëª©ë¡
+		
+	}
 	
+	public void guildAdd() {//ê¸¸ë“œì› ì˜ì…
+		
+	}
+	
+	public void guildRemove() {//ê¸¸ë“œì› í•´ê³ 
+		
+	}
+	
+	public void party() {//íŒŒí‹°ì› ì„¤ì •
+		//íŒŒí‹°ì› ì¶”ê°€
+		//íŒŒí‹°ì› ì‚­ì œ
+		//íŒŒí‹°ì› ë³´ê¸°
+	}
+	
+	public void guildLineup() {//ì •ë ¬
+		
+	}
 }
