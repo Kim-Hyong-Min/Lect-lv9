@@ -1,37 +1,46 @@
 
 public class Main {
-// ¸ŞÀÎ¸Ş´º
-// ¤¤ ±æµå°ü¸®, »óÁ¡, ÀÎº¥Åä¸®, ÀúÀå, ·Îµå
+	private Shop sp = new Shop();
+	public static Guild gd = new Guild();
+	
+// ë©”ì¸ë©”ë‰´
+// ã„´ ê¸¸ë“œê´€ë¦¬, ìƒì , ì¸ë²¤í† ë¦¬, ì €ì¥, ë¡œë“œ
 	public void run() {
+		gd.guildSet();
+		sp.weaponSet();
+		sp.armorSet();
+		sp.ringSet();
 		while(true) {
+			gd.guildTitle();
 			printMenu();
+			menuInput();
 		}
 	}
 	
 	public void printMenu() {
-		System.out.println("1.±æµå°ü¸®\n2.»óÁ¡\n3.ÀÎº¥Åä¸®\n4.ÀúÀå\n5.·Îµå\n6.Á¾·á");
+		System.out.println("1.ê¸¸ë“œê´€ë¦¬\n2.ìƒì \n3.ì¸ë²¤í† ë¦¬\n4.ì €ì¥\n5.ë¡œë“œ\n6.ì¢…ë£Œ");
 	}
 	
 	public void menuInput() {
 		String input = Shop.sc.next();
 		try {
 			int num = Integer.parseInt(input);
-			if(num==1) {//±æµå°ü¸®
+			if(num==1) {//ê¸¸ë“œê´€ë¦¬
 				
 			}
-			else if(num==2) {//»óÁ¡
+			else if(num==2) {//ìƒì 
+				sp.shopMenu();
+			}
+			else if(num==3) {//ì¸ë²¤í† ë¦¬
 				
 			}
-			else if(num==3) {//ÀÎº¥Åä¸®
+			else if(num==4) {//ì €ì¥
 				
 			}
-			else if(num==4) {//ÀúÀå
+			else if(num==5) {//ë¡œë“œ
 				
 			}
-			else if(num==5) {//·Îµå
-				
-			}
-			else if(num==6) {//Á¾·á
+			else if(num==6) {//ì¢…ë£Œ
 				
 			}
 			
@@ -42,31 +51,34 @@ public class Main {
 	
 
 	
-//	¹øÈ£, ÀÌ¸§, ·¹º§, Ã¤·Â, °ø°İ·Â, ¹æ¾î·Â, ÆÄÆ¼¿©ºÎ
+//	ë²ˆí˜¸, ì´ë¦„, ë ˆë²¨, ì±„ë ¥, ê³µê²©ë ¥, ë°©ì–´ë ¥, íŒŒí‹°ì—¬ë¶€
 	
 	
 
 	
-//	¹øÈ£, ÀÌ¸§, °ø°İ·Â, °¡°İ
+//	ë²ˆí˜¸, ì´ë¦„, ê³µê²©ë ¥, ê°€ê²©
 	
-//	ÀÎº¥Åä¸®
-//	¤¤ Âø¿ë, ÆÇ¸Å
+//	ì¸ë²¤í† ë¦¬
+//	ã„´ ì°©ìš©, íŒë§¤
 	
-//	ÀÌ¸§, ·¹º§, Ã¼·Â, °ø°İ·Â, ¹æ¾î·Â, ÆÄÆ¼¿©ºÎ
-//	¹«±â
-//	¹æ¾î±¸
-//	¹İÁö
-	
-	
-//	ÆÄÀÏ
-//	±æµå
-//	ÀÎº¥Åä¸®
-//	¾ÆÀÌÅÛ
-//	»óÁ¡
-//	ÇÃ·¹ÀÌ¾î
-//	¸ŞÀÎ
+//	ì´ë¦„, ë ˆë²¨, ì²´ë ¥, ê³µê²©ë ¥, ë°©ì–´ë ¥, íŒŒí‹°ì—¬ë¶€
+//	ë¬´ê¸°
+//	ë°©ì–´êµ¬
+//	ë°˜ì§€
 	
 	
+//	íŒŒì¼
+//	ê¸¸ë“œ
+//	ì¸ë²¤í† ë¦¬
+//	ì•„ì´í…œ
+//	ìƒì 
+//	í”Œë ˆì´ì–´
+//	ë©”ì¸
 	
+	
+	public static void main(String[] args) {
+		Main main = new Main();
+		main.run();
+	}
 	
 }
