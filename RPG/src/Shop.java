@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class Shop {
 	public static Scanner sc = new Scanner(System.in);
-	ArrayList<Item>item = new ArrayList<>();
+	public static ArrayList<Item>item = new ArrayList<>();
 	
 //	상점
 //	ㄴ 무기, 갑옷, 반지
@@ -24,7 +24,7 @@ public class Shop {
 					ring();
 				}
 				else if(num==4) {//뒤로가기
-					
+					break;
 				}
 				
 			} catch (Exception e) {
@@ -104,12 +104,13 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==1) {
 						if(check==num) {
-							System.out.println(this.item.get(i).getName());
+							Main.gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;
 					}
 				}
+				break;
 			}
 			else if(num==cnt) {
 				break;
@@ -131,7 +132,33 @@ public class Shop {
 				cnt++;
 			}
 		}
+		System.out.printf("(%d)뒤로가기\n",cnt+1);
+		while(true) {
 		System.out.print("번호 입력 : ");
+		String input = sc.next();
+		try {
+			int num = Integer.parseInt(input)-1;
+			if(num>=0 && num<cnt) {
+				int check = 0;
+				for(int i=0; i<this.item.size(); i++) {
+					if((this.item.get(i).getItemCode()/1000)==2) {
+						if(check==num) {
+							Main.gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							break;
+						}
+						check++;
+					}
+				}
+				break;
+			}
+			else if(num==cnt) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+			
+		}catch (Exception e) {
+		}
+		}
 	}
 	
 	public void ring() {//반지
@@ -143,6 +170,32 @@ public class Shop {
 				cnt++;
 			}
 		}
+		System.out.printf("(%d)뒤로가기\n",cnt+1);
+		while(true) {
 		System.out.print("번호 입력 : ");
+		String input = sc.next();
+		try {
+			int num = Integer.parseInt(input)-1;
+			if(num>=0 && num<cnt) {
+				int check = 0;
+				for(int i=0; i<this.item.size(); i++) {
+					if((this.item.get(i).getItemCode()/1000)==3) {
+						if(check==num) {
+							Main.gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							break;
+						}
+						check++;
+					}
+				}
+				break;
+			}
+			else if(num==cnt) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+			
+		}catch (Exception e) {
+		}
+		}
 	}
 }
