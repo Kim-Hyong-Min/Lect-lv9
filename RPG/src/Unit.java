@@ -92,7 +92,7 @@ public class Unit {
 								}
 								if(check == -1) {
 									Inventory item = new Inventory(this.player.get(num).getPlayerItem(i), 1);
-									Main.gd.inven.add(null);
+									Main.gd.inven.add(item);
 								}
 							}
 						}
@@ -108,8 +108,10 @@ public class Unit {
 						else {
 							this.player.remove(num);
 						}
+						System.out.println("해고 완료!");
 					}
 					else System.out.println("파티 인원보다 적은 길드원을 가지실 수 없습니다.");
+					break;
 				}
 				else if(num == this.player.size()) {
 				break;	
@@ -248,6 +250,33 @@ public class Unit {
 		}
 	}
 	
-	
+	public void PlayerLineUp() {
+		System.out.println("(1)이름별 정렬\n(2)레벨별 정렬\n(3)파티별 정렬\n(4)뒤로가기");
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int idx = Integer.parseInt(input);
+			if(idx == 1) {//이름순
+				for(int i=0; i<this.player.size(); i++) {
+					for(int j=0; j<this.player.size(); j++) {
+						
+					}
+				}
+			}
+			else if(idx == 2) {//레벨순
+				
+			}
+			else if(idx == 3) {//파티순
+				
+			}
+			else if(idx == 4) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
+	}
 	
 }
