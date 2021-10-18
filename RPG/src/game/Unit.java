@@ -1,3 +1,4 @@
+package game;
 
 import java.util.ArrayList;
 
@@ -260,15 +261,41 @@ public class Unit {
 			if(idx == 1) {//이름순
 				for(int i=0; i<this.player.size(); i++) {
 					for(int j=0; j<this.player.size(); j++) {
-						
+						if(this.player.get(i).getPlayerNameNum()<this.player.get(j).getPlayerNameNum()) {
+							Player temp = this.player.get(i);
+							this.player.set(i, this.player.get(j));
+							this.player.set(j, temp);
+						}
 					}
 				}
+				System.out.println("정렬 완료!");
+				break;
 			}
 			else if(idx == 2) {//레벨순
-				
+				for(int i=0; i<this.player.size(); i++) {
+					for(int j=0; j<this.player.size(); j++) {
+						if(this.player.get(i).getPlayerLevel()>this.player.get(j).getPlayerLevel()) {
+							Player temp = this.player.get(i);
+							this.player.set(i, this.player.get(j));
+							this.player.set(j, temp);
+						}
+					}
+				}
+				System.out.println("정렬 완료!");
+				break;
 			}
 			else if(idx == 3) {//파티순
-				
+				for(int i=0; i<this.player.size(); i++) {
+					for(int j=0; j<this.player.size(); j++) {
+						if(this.player.get(i).getPlayerParty()==true && this.player.get(j).getPlayerParty()==false) {
+							Player temp = this.player.get(i);
+							this.player.set(i, this.player.get(j));
+							this.player.set(j, temp);
+						}
+					}
+				}
+				System.out.println("정렬 완료!");
+				break;
 			}
 			else if(idx == 4) {
 				break;

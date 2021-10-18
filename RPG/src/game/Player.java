@@ -1,3 +1,4 @@
+package game;
 
 
 public class Player {
@@ -28,16 +29,49 @@ public class Player {
 		this.playerCode = playerCode;
 	}
 	
+	public String getPlayerName() {
+		return this.name;
+	}
+	
+	public int getPlayerLevel() {
+		return this.level;
+	}
+	
+	public int getPlayerHp() {
+		return this.hp;
+	}
+	
+	public int getPlayerMaxHp() {
+		return this.maxHp;
+	}
+	
+	public int getPlayerAtk() {
+		return this.atk;
+	}
+	
+	public int getPlayerDef() {
+		return this.def;
+	}
+	
+	public int getPlayerExp() {
+		return this.exp;
+	}
+	
 	public int getPlayerCode() {
 		return this.playerCode;
 	}
 	
-	public int getPlayerItem(int idx) {
-		return this.playerItem[idx];
-	}
-	
 	public boolean getPlayerParty() {
 		return this.party;
+	}
+	
+	public int getPlayerNameNum() {
+		int num = this.name.charAt(0);
+		return num;
+	}
+	
+	public int getPlayerItem(int idx) {
+		return this.playerItem[idx];
 	}
 	
 	 public String getPlayerItemName(int idx) {

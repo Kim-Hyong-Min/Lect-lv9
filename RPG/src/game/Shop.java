@@ -1,7 +1,9 @@
+package game;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Shop {
+	public static Shop instance = new Shop();
 	public static Scanner sc = new Scanner(System.in);
 	public static ArrayList<Item>item = new ArrayList<>();
 	

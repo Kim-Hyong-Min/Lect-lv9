@@ -1,3 +1,4 @@
+package game;
 import java.util.ArrayList;
 
 public class Guild {
@@ -176,6 +177,6 @@ public class Guild {
 	}
 	
 	public void guildLineup() {//Á¤·Ä
-		
+		ut.PlayerLineUp();
 	}
 }
