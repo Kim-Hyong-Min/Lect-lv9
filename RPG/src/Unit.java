@@ -128,14 +128,20 @@ public class Unit {
 	
 	public void PlayerItemAdd() {
 		Main.gd.itemList();
-		System.out.printf("(%d)뒤로가기\n",(Main.gd.inven.size()+1));
+		System.out.printf("(%d) 뒤로가기\n",(Main.gd.inven.size()+1));
 		while(true) {
 		System.out.print("번호 입력 : ");
 		String input = Shop.sc.next();
 		try {
 			int num = Integer.parseInt(input)-1;
 			if(num>=0 && num < Main.gd.inven.size()) {
-				
+				PlayerItemChoice(Main.gd.inven.get(num).getItemType()-1, Main.gd.inven.get(num).getItemCode());
+				if(Main.gd.inven.get(num).getItemCnt()>1) {
+					Main.gd.inven.get(num).setItemCnt(-1);
+				}
+				else {
+					Main.gd.inven.remove(num);
+				}
 				break;
 			}
 			else if(num==Main.gd.inven.size()) {
@@ -147,12 +153,99 @@ public class Unit {
 		}
 	}
 	
-	public void PlayerItemCheck() {
-		
+	public void PlayerItemChoice(int itemType, int itemCode) {
+			for(int i=0; i<this.player.size(); i++) {
+				System.out.printf("(%d) ",i+1);
+				this.player.get(i).printPlayerItem();
+			}
+			System.out.printf("(%d) 뒤로가기\n",(this.player.size()+1));
+			while(true) {
+			System.out.print("번호 입력 : ");
+			String input = Shop.sc.next();
+			try {
+				int num = Integer.parseInt(input)-1;
+				if(num>=0 && num < this.player.size()) {
+					if(this.player.get(num).getPlayerItem(itemType)==0) {
+						this.player.get(num).setPlayerItem(itemType, itemCode);
+						this.player.get(num).PlayerItemAdd(itemCode);
+						System.out.println("착용 완료!");
+						break;
+					}
+					else {
+						System.out.println("이미 착용한 장비가 존재합니다.");
+					}
+				}
+				else if(num==this.player.size()) {
+					break;
+				}
+				else System.out.println("잘못된 번호 입니다.");
+			}catch (Exception e) {
+			}
+		}
 	}
 	
 	public void PlayerItemRemove() {
-		
+		for(int i=0; i<this.player.size(); i++) {
+			System.out.printf("(%d) ",i+1);
+			this.player.get(i).printPlayerItem();
+		}
+		System.out.printf("(%d) 뒤로가기\n",(this.player.size()+1));
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int num = Integer.parseInt(input)-1;
+			if(num>=0 && num < this.player.size()) {
+				int check = -1;
+				for(int i=0; i<3; i++) {
+					if(this.player.get(num).getPlayerItem(i) != 0) {
+						check=i;
+					}
+				}
+				if(check != -1) {
+					PlayerItemRemoveChoice(num);
+					break;
+				}
+				else System.out.println("해당 길드원이 착용중인 장비가 없습니다.");
+			}
+			else if(num==this.player.size()) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
+	}
+	
+	public void PlayerItemRemoveChoice(int num) {
+		int cnt = 1;
+		int itemList[] = new int[3];
+		for(int i=0; i<3; i++) {
+			if(this.player.get(num).getPlayerItem(i) != 0) {
+				itemList[cnt-1] = this.player.get(num).getPlayerItem(i);
+				System.out.println(cnt+". ["+this.player.get(num).getPlayerItemName(i)+"]");
+				cnt++;
+			}
+		}
+		System.out.printf("(%d) 뒤로가기\n",cnt);
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int idx = Integer.parseInt(input);
+			if(idx>0 && idx < cnt) {
+				this.player.get(num).PlayerItemRemove(itemList[idx-1]);
+				this.player.get(num).setPlayerItem(idx-1, 0);
+				Main.gd.setGuildInven(itemList[idx-1]);
+				break;
+			}
+			else if(idx == cnt) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
 	}
 	
 	

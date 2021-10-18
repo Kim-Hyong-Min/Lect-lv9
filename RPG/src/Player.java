@@ -40,8 +40,22 @@ public class Player {
 		return this.party;
 	}
 	
+	 public String getPlayerItemName(int idx) {
+		  String item = "";
+		  for(int i=0; i<Shop.item.size(); i++) {
+			  if(this.playerItem[idx] == Shop.item.get(i).getItemCode()) {
+				  item += Shop.item.get(i).getName();
+			  }
+		  }
+		  return item;
+	  }
+	
 	public void setPlayerParty() {
 		this.party = true;
+	}
+	
+	public void setPlayerItem(int idx, int itemCode) {
+		this.playerItem[idx] = itemCode;
 	}
 	
 	
@@ -70,6 +84,50 @@ public class Player {
 			else System.out.print("¾øÀ½] ");
 		}
 		System.out.println();
+	}
+	
+	public void printPlayerItem() {
+		System.out.printf("[%s] [Lv.%d] [HP:%d/%d] [ATK:%d] [DEF:%d] [EXP:%d] ",this.name, this.level, this.hp, this.maxHp, this.atk, this.def, this.exp);
+		for(int i=0; i<this.playerItem.length; i++) {
+			if(i==0) {
+				System.out.print("[¹«±â:");
+			}
+			else if(i==1) {
+				System.out.print("[°©¿Ê:");
+			}
+			else if(i==2) {
+				System.out.print("[¹ÝÁö:");
+			}
+			if(this.playerItem[i]!=0) {
+				for(int j=0; j<Main.sp.item.size(); j++) {
+					if(this.playerItem[i]==Main.sp.item.get(j).getItemCode()) {
+						System.out.printf("%s] ",Main.sp.item.get(j).getName());
+					}
+				}
+			}
+			else System.out.print("¾øÀ½] ");
+		}
+		System.out.println();
+	}
+	
+	public void PlayerItemAdd(int itemCode) {
+		for(int i=0; i<Main.sp.item.size(); i++) {
+			if(itemCode==Main.sp.item.get(i).getItemCode()) {
+				this.atk += Main.sp.item.get(i).getAtk();
+				this.def += Main.sp.item.get(i).getDef();
+				break;
+			}
+		}
+	}
+	
+	public void PlayerItemRemove(int itemCode) {
+		for(int i=0; i<Main.sp.item.size(); i++) {
+			if(itemCode==Main.sp.item.get(i).getItemCode()) {
+				this.atk -= Main.sp.item.get(i).getAtk();
+				this.def -= Main.sp.item.get(i).getDef();
+				break;
+			}
+		}
 	}
 	
 }

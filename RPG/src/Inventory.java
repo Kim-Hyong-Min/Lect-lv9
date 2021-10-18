@@ -20,10 +20,12 @@ public class Inventory {
 	  return this.itemCnt;
   }
   
+  public int getItemType() {
+	  return this.itemCode/1000;
+  }
+  
   public void setItemCnt(int num) {
 	  this.itemCnt += num;
   }
-  
-
     
 }

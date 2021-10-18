@@ -48,6 +48,28 @@ public class Guild {
 		else System.out.println("보유금액이 부족합니다.");
 	}
 	
+	public void setGuildInven(int itemCode) {
+		if(this.inven.size()==0) {
+			Inventory it = new Inventory(itemCode, 1);
+			this.inven.add(it);
+		}
+		else {
+			int check = -1;
+			for(int i=0; i<this.inven.size(); i++) {
+				if(this.inven.get(i).getItemCode()== itemCode) {
+					check = i;
+				}
+			}
+			if(check != -1) {
+				this.inven.get(check).setItemCnt(1);
+			}
+			else {
+				Inventory it = new Inventory(itemCode, 1);
+				this.inven.add(it);
+			}
+		}
+	}
+	
 	public void guildTitle() {
 		System.out.printf("========[%s]========\n",this.gulidName);
 	}
@@ -102,10 +124,10 @@ public class Guild {
 					itemList();
 				}
 				else if(num==2) {//장비 입기
-					
+					ut.PlayerItemAdd();
 				}
 				else if(num==3) {//장비 벗기
-					
+					ut.PlayerItemRemove();
 				}
 				else if(num==4) {//뒤로가기
 					break;
@@ -137,12 +159,6 @@ public class Guild {
 		}
 		else System.out.println("보유중인 장비가 없습니다.");
 	}
-	  
-	public void playerItem(){
-		
-	}
-	
-	
 	
 	public void guildList() {//길드원 목록
 		System.out.println("====================================================================");
@@ -157,10 +173,6 @@ public class Guild {
 	
 	public void guildRemove() {//길드원 해고
 		ut.playerRemove();
-	}
-	
-	public void party() {//자동파티
-		//4명설정
 	}
 	
 	public void guildLineup() {//정렬
