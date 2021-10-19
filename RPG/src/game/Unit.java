@@ -71,6 +71,14 @@ public class Unit {
 		}
 		Player py = new Player(name, maxHp, atk, def, playerCode);
 		this.player.add(py);
+		if(this.player.size()<=4) {
+			for(int i=0; i<this.player.size(); i++) {
+				if(this.player.get(i).getPlayerParty()==false) {
+					this.player.get(i).setPlayerParty();
+					break;
+				}
+			}
+		}
 		System.out.println("추가 완료!");
 	}
 	
@@ -88,7 +96,6 @@ public class Unit {
 			try {
 				int num = Integer.parseInt(input)-1;
 				if(num>=0 && num<this.player.size()) {
-					if(this.player.size()>4) {
 						for(int i=0; i<3; i++) {//착용 장비 해제 후 인벤토리 귀속
 							if(this.player.get(num).getPlayerItem(i) != 0) {
 								int check = -1;
@@ -127,8 +134,6 @@ public class Unit {
 							this.player.remove(num);
 						}
 						System.out.println("해고 완료!");
-					}
-					else System.out.println("파티 인원보다 적은 길드원을 가지실 수 없습니다.");
 					break;
 				}
 				else if(num == this.player.size()) {
