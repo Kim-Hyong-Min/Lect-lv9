@@ -214,11 +214,14 @@ public class Unit {
 		int cnt = 1;
 		int itemList[] = new int[3];
 		for(int i=0; i<3; i++) {
-			if(this.player.get(num).getPlayerItem(i) != 0) {
-				itemList[cnt-1] = this.player.get(num).getPlayerItem(i);
-				System.out.println(cnt+". ["+this.player.get(num).getPlayerItemName(i)+"]");
-				cnt++;
+			if(player.get(num).getPlayerItem(i) != 0) {
+				System.out.println(cnt+". ["+player.get(num).getPlayerItemName(i)+"]");
 			}
+			else {
+				System.out.println(cnt+". [없음]");
+			}
+				itemList[cnt-1] = player.get(num).getPlayerItem(i);
+				cnt++;
 		}
 		System.out.printf("(%d) 뒤로가기\n",cnt);
 		while(true) {
@@ -227,21 +230,24 @@ public class Unit {
 		try {
 			int idx = Integer.parseInt(input);
 			if(idx>0 && idx < cnt) {
-				this.player.get(num).PlayerItemRemove(itemList[idx-1]);
-				this.player.get(num).setPlayerItem(idx-1, 0);
-				String name = "";
-				int atk = 0;
-				int def = 0;
-				for(int i=0; i<sp.item.size(); i++) {
-					if(this.sp.item.get(i).getItemCode() == itemList[idx-1]) {
-						name = this.sp.item.get(i).getName();
-						atk = this.sp.item.get(i).getAtk();
-						def = this.sp.item.get(i).getDef();
+				if(player.get(num).getPlayerItem(idx-1) != 0) {
+					player.get(num).PlayerItemRemove(itemList[idx-1]);
+					player.get(num).setPlayerItem(idx-1, 0);
+					String name = "";
+					int atk = 0;
+					int def = 0;
+					for(int i=0; i<Shop.item.size(); i++) {
+						if(Shop.item.get(i).getItemCode() == itemList[idx-1]) {
+							name = Shop.item.get(i).getName();
+							atk = Shop.item.get(i).getAtk();
+							def = Shop.item.get(i).getDef();
+						}
 					}
+					setGuildInven(name, atk, def, itemList[idx-1]);
+					System.out.println("탈착 성공!");
+					break;
 				}
-				
-				gd.setGuildInven(name, atk, def, itemList[idx-1]);
-				break;
+				else System.out.println("장착한 장비가 없습니다.");
 			}
 			else if(idx == cnt) {
 				break;
@@ -249,6 +255,29 @@ public class Unit {
 			else System.out.println("잘못된 번호 입니다.");
 		}catch (Exception e) {
 		}
+		}
+		
+	}
+	
+	public void setGuildInven(String name, int atk, int def, int itemCode) {
+		if(gd.inven.size()==0) {
+			Inventory it = new Inventory(name, atk, def, itemCode, 1);
+			gd.inven.add(it);
+		}
+		else {
+			int check = -1;
+			for(int i=0; i<gd.inven.size(); i++) {
+				if(gd.inven.get(i).getItemCode()== itemCode) {
+					check = i;
+				}
+			}
+			if(check != -1) {
+				gd.inven.get(check).setItemCnt(1);
+			}
+			else {
+				Inventory it = new Inventory(name, atk, def, itemCode, 1);
+				gd.inven.add(it);
+			}
 		}
 	}
 	

@@ -58,23 +58,23 @@ public class Guild {
 	}
 	
 	public void setGuildInven(String name, int atk, int def, int itemCode) {
-		if(this.inven.size()==0) {
+		if(inven.size()==0) {
 			Inventory it = new Inventory(name, atk, def, itemCode, 1);
-			this.inven.add(it);
+			inven.add(it);
 		}
 		else {
 			int check = -1;
-			for(int i=0; i<this.inven.size(); i++) {
-				if(this.inven.get(i).getItemCode()== itemCode) {
+			for(int i=0; i<inven.size(); i++) {
+				if(inven.get(i).getItemCode()== itemCode) {
 					check = i;
 				}
 			}
 			if(check != -1) {
-				this.inven.get(check).setItemCnt(1);
+				inven.get(check).setItemCnt(1);
 			}
 			else {
 				Inventory it = new Inventory(name, atk, def, itemCode, 1);
-				this.inven.add(it);
+				inven.add(it);
 			}
 		}
 	}
@@ -189,6 +189,48 @@ public class Guild {
 				break;
 			}
 			else if(num==inven.size()) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
+	}
+	
+	public void PlayerItemRemoveChoice(int num) {
+		int cnt = 1;
+		int itemList[] = new int[3];
+		for(int i=0; i<3; i++) {
+			if(ut.player.get(num).getPlayerItem(i) != 0) {
+				itemList[cnt-1] = ut.player.get(num).getPlayerItem(i);
+				System.out.println(cnt+". ["+ut.player.get(num).getPlayerItemName(i)+"]");
+				cnt++;
+			}
+		}
+		System.out.printf("(%d) 뒤로가기\n",cnt);
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int idx = Integer.parseInt(input);
+			if(idx>0 && idx < cnt) {
+				ut.player.get(num).PlayerItemRemove(itemList[idx-1]);
+				ut.player.get(num).setPlayerItem(idx-1, 0);
+				String name = "";
+				int atk = 0;
+				int def = 0;
+				for(int i=0; i<sp.item.size(); i++) {
+					if(this.sp.item.get(i).getItemCode() == itemList[idx-1]) {
+						name = this.sp.item.get(i).getName();
+						atk = this.sp.item.get(i).getAtk();
+						def = this.sp.item.get(i).getDef();
+					}
+				}
+				
+				setGuildInven(name, atk, def, itemList[idx-1]);
+				break;
+			}
+			else if(idx == cnt) {
 				break;
 			}
 			else System.out.println("잘못된 번호 입니다.");
