@@ -5,7 +5,7 @@ public class Guild {
 	public static Guild instance = new Guild();
 	private Shop sp = Shop.instance;
 	private Unit ut = Unit.instance;
-	ArrayList<Inventory> inven = new ArrayList<>();
+	public static ArrayList<Inventory> inven = new ArrayList<>();
 	private String gulidName;
 	private int guildMoney;
 	private final int maxParty = 4;
@@ -25,11 +25,11 @@ public class Guild {
 		return this.guildMoney;
 	}
 	
-	public void setGuildMoney(int itemCode, int money) {
+	public void setGuildMoney(String name, int atk, int def, int itemCode, int money) {
 		if(this.guildMoney-money>=0) {
 			if(this.inven.size()==0) {
 				this.guildMoney-= money;
-				Inventory it = new Inventory(itemCode, 1);
+				Inventory it = new Inventory(name, atk, def, itemCode, 1);
 				this.inven.add(it);
 				System.out.println("구매 완료!");
 			}
@@ -46,7 +46,7 @@ public class Guild {
 					System.out.println("구매 완료!");
 				}
 				else {
-					Inventory it = new Inventory(itemCode, 1);
+					Inventory it = new Inventory(name, atk, def, itemCode, 1);
 					this.inven.add(it);
 					this.guildMoney-= money;
 					System.out.println("구매 완료!");
@@ -57,9 +57,9 @@ public class Guild {
 		else System.out.println("보유금액이 부족합니다.");
 	}
 	
-	public void setGuildInven(int itemCode) {
+	public void setGuildInven(String name, int atk, int def, int itemCode) {
 		if(this.inven.size()==0) {
-			Inventory it = new Inventory(itemCode, 1);
+			Inventory it = new Inventory(name, atk, def, itemCode, 1);
 			this.inven.add(it);
 		}
 		else {
@@ -73,7 +73,7 @@ public class Guild {
 				this.inven.get(check).setItemCnt(1);
 			}
 			else {
-				Inventory it = new Inventory(itemCode, 1);
+				Inventory it = new Inventory(name, atk, def, itemCode, 1);
 				this.inven.add(it);
 			}
 		}
@@ -138,7 +138,7 @@ public class Guild {
 					itemList();
 				}
 				else if(num==2) {//장비 입기
-					ut.PlayerItemAdd();
+					PlayerItemAdd();
 				}
 				else if(num==3) {//장비 벗기
 					ut.PlayerItemRemove();
@@ -156,22 +156,45 @@ public class Guild {
 	public void itemList(){ // 길드 아이템 리스트
 		if(this.inven.size()>0) {
 			for(int i=0; i<this.inven.size(); i++){
-				for(int j=0; j<this.sp.item.size(); j++) {
-					if(this.inven.get(i).getItemCode()==this.sp.item.get(j).getItemCode()) {
-						if(this.inven.get(i).getItemCode()/1000==1) {//무기
-							System.out.printf("(%d) [%s] 공격력 : %d / 수량 : %d개\n", (i+1), this.sp.item.get(j).getName(), this.sp.item.get(j).getAtk(), this.inven.get(i).getItemCnt());
-						}
-						else if(this.inven.get(i).getItemCode()/1000==2) {//갑옷
-							System.out.printf("(%d) [%s] 방어력 : %d / 수량 : %d개\n", (i+1), this.sp.item.get(j).getName(), this.sp.item.get(j).getDef(), this.inven.get(i).getItemCnt());
-						}
-						else if(this.inven.get(i).getItemCode()/1000==3) {//반지
-							System.out.printf("(%d) [%s] 공격력 : %d / 방어력 : %d / 수량 : %d개\n", (i+1), this.sp.item.get(j).getName(), this.sp.item.get(j).getAtk(), this.sp.item.get(j).getDef(), this.inven.get(i).getItemCnt());
-						}
-					}
+				if(this.inven.get(i).getItemCode()/1000==1) {//무기
+					System.out.printf("(%d) [%s] 공격력 : %d / 수량 : %d개\n", (i+1), this.inven.get(i).getItemName(), this.inven.get(i).getAtk(), this.inven.get(i).getItemCnt());
+				}
+				else if(this.inven.get(i).getItemCode()/1000==2) {//갑옷
+					System.out.printf("(%d) [%s] 방어력 : %d / 수량 : %d개\n", (i+1), this.inven.get(i).getItemName(), this.inven.get(i).getDef(), this.inven.get(i).getItemCnt());
+				}
+				else if(this.inven.get(i).getItemCode()/1000==3) {//반지
+					System.out.printf("(%d) [%s] 공격력 : %d / 방어력 : %d / 수량 : %d개\n", (i+1), this.inven.get(i).getItemName(), this.inven.get(i).getAtk(), this.inven.get(i).getDef(), this.inven.get(i).getItemCnt());
 				}
 			}
 		}
 		else System.out.println("보유중인 장비가 없습니다.");
+	}
+	
+	public void PlayerItemAdd() {
+		itemList();
+		System.out.printf("(%d) 뒤로가기\n",(inven.size()+1));
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int num = Integer.parseInt(input)-1;
+			if(num>=0 && num < inven.size()) {
+				ut.PlayerItemChoice(inven.get(num).getItemType()-1, inven.get(num).getItemCode());
+				if(inven.get(num).getItemCnt()>1) {
+					inven.get(num).setItemCnt(-1);
+				}
+				else {
+					inven.remove(num);
+				}
+				break;
+			}
+			else if(num==inven.size()) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
 	}
 	
 	

@@ -111,7 +111,7 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==1) {
 						if(check==num) {
-							gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							gd.setGuildMoney(this.item.get(i).getName(), this.item.get(i).getAtk(), this.item.get(i).getDef(), this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;
@@ -150,7 +150,7 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==2) {
 						if(check==num) {
-							gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							gd.setGuildMoney(this.item.get(i).getName(), this.item.get(i).getAtk(), this.item.get(i).getDef(), this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;
@@ -188,7 +188,7 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==3) {
 						if(check==num) {
-							gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							gd.setGuildMoney(this.item.get(i).getName(), this.item.get(i).getAtk(), this.item.get(i).getDef(), this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;

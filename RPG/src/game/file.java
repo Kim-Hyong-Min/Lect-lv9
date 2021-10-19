@@ -182,7 +182,7 @@ public class file {
 			String data = br.readLine();
 			while(data != null) {
 				String temp[] = data.split("/");
-				Inventory iy = new Inventory(temp[0], Integer.parseInt(temp[1]), 0, 0, 0);
+				Inventory iy = new Inventory(temp[0], Integer.parseInt(temp[1]), Integer.parseInt(temp[2]), Integer.parseInt(temp[3]), Integer.parseInt(temp[4]));
 				gd.inven.add(iy);
 				data = br.readLine();
 			}
