@@ -4,10 +4,16 @@ import java.util.ArrayList;
 
 public class Unit {
 	public static Unit instance = new Unit();
+	private Guild gd = Guild.instance;
 	ArrayList<Player> player = new ArrayList<>();
 	//채력 : 15~20
 	//공격력 : 5~8
 	//방어력 : 5~8
+	
+	public void playerReset() {
+		this.player.clear();
+	}
+	
 	public void playerSet() {//기존 유닛
 		Player py = new Player("강건마", 15, 5, 6, 1001);
 		this.player.add(py);
@@ -85,15 +91,15 @@ public class Unit {
 						for(int i=0; i<3; i++) {//착용 장비 해제 후 인벤토리 귀속
 							if(this.player.get(num).getPlayerItem(i) != 0) {
 								int check = -1;
-								for(int j=0; j<Main.gd.inven.size(); j++) {
-									if(this.player.get(num).getPlayerItem(i) == Main.gd.inven.get(j).getItemCode()) {
-										Main.gd.inven.get(j).setItemCnt(1);
+								for(int j=0; j<gd.inven.size(); j++) {
+									if(this.player.get(num).getPlayerItem(i) == gd.inven.get(j).getItemCode()) {
+										gd.inven.get(j).setItemCnt(1);
 										check = j;
 									}
 								}
 								if(check == -1) {
 									Inventory item = new Inventory(this.player.get(num).getPlayerItem(i), 1);
-									Main.gd.inven.add(item);
+									gd.inven.add(item);
 								}
 							}
 						}
@@ -130,24 +136,24 @@ public class Unit {
 	}
 	
 	public void PlayerItemAdd() {
-		Main.gd.itemList();
-		System.out.printf("(%d) 뒤로가기\n",(Main.gd.inven.size()+1));
+		gd.itemList();
+		System.out.printf("(%d) 뒤로가기\n",(gd.inven.size()+1));
 		while(true) {
 		System.out.print("번호 입력 : ");
 		String input = Shop.sc.next();
 		try {
 			int num = Integer.parseInt(input)-1;
-			if(num>=0 && num < Main.gd.inven.size()) {
-				PlayerItemChoice(Main.gd.inven.get(num).getItemType()-1, Main.gd.inven.get(num).getItemCode());
-				if(Main.gd.inven.get(num).getItemCnt()>1) {
-					Main.gd.inven.get(num).setItemCnt(-1);
+			if(num>=0 && num < gd.inven.size()) {
+				PlayerItemChoice(gd.inven.get(num).getItemType()-1, gd.inven.get(num).getItemCode());
+				if(gd.inven.get(num).getItemCnt()>1) {
+					gd.inven.get(num).setItemCnt(-1);
 				}
 				else {
-					Main.gd.inven.remove(num);
+					gd.inven.remove(num);
 				}
 				break;
 			}
-			else if(num==Main.gd.inven.size()) {
+			else if(num==gd.inven.size()) {
 				break;
 			}
 			else System.out.println("잘못된 번호 입니다.");
@@ -239,7 +245,7 @@ public class Unit {
 			if(idx>0 && idx < cnt) {
 				this.player.get(num).PlayerItemRemove(itemList[idx-1]);
 				this.player.get(num).setPlayerItem(idx-1, 0);
-				Main.gd.setGuildInven(itemList[idx-1]);
+				gd.setGuildInven(itemList[idx-1]);
 				break;
 			}
 			else if(idx == cnt) {

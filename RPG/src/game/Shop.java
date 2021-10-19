@@ -4,11 +4,16 @@ import java.util.Scanner;
 
 public class Shop {
 	public static Shop instance = new Shop();
+	private Guild gd = Guild.instance;
 	public static Scanner sc = new Scanner(System.in);
 	public static ArrayList<Item>item = new ArrayList<>();
 	
 //	»óÁ¡
 //	¤¤ ¹«±â, °©¿Ê, ¹ÝÁö
+	
+	public void shopReset() {
+		this.item.clear();
+	}
 	
 	public void shopMenu() {
 		while(true) {
@@ -87,7 +92,7 @@ public class Shop {
 	}
 	
 	public void weapon() {//¹«±â
-		Main.gd.printGuildMoney();
+		gd.printGuildMoney();
 		int cnt = 0;
 		for(int i=0; i<this.item.size(); i++) {
 			if((this.item.get(i).getItemCode()/1000)==1) { // ¹«±â ÄÚµå Ã¼Å©
@@ -106,7 +111,7 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==1) {
 						if(check==num) {
-							Main.gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;
@@ -126,7 +131,7 @@ public class Shop {
 	}
 	
 	public void armor() {//°©¿Ê
-		Main.gd.printGuildMoney();
+		gd.printGuildMoney();
 		int cnt = 0;
 		for(int i=0; i<this.item.size(); i++) {
 			if((this.item.get(i).getItemCode()/1000)==2) { // °©¿Ê ÄÚµå Ã¼Å©
@@ -145,7 +150,7 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==2) {
 						if(check==num) {
-							Main.gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;
@@ -164,7 +169,7 @@ public class Shop {
 	}
 	
 	public void ring() {//¹ÝÁö
-		Main.gd.printGuildMoney();
+		gd.printGuildMoney();
 		int cnt = 0;
 		for(int i=0; i<this.item.size(); i++) {
 			if((this.item.get(i).getItemCode()/1000)==3) { // °©¿Ê ÄÚµå Ã¼Å©
@@ -183,7 +188,7 @@ public class Shop {
 				for(int i=0; i<this.item.size(); i++) {
 					if((this.item.get(i).getItemCode()/1000)==3) {
 						if(check==num) {
-							Main.gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
+							gd.setGuildMoney(this.item.get(i).getItemCode(), this.item.get(i).getPrice());
 							break;
 						}
 						check++;

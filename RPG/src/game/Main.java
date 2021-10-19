@@ -3,9 +3,11 @@ import java.util.Random;
 
 public class Main {
 	public static Random rn = new Random();
-	public static Shop sp = new Shop();
-	public static Guild gd = new Guild();
+	private Shop sp = Shop.instance;
+	private Guild gd = Guild.instance;
 	private Unit ut = Unit.instance;
+	private file fl = file.instance;
+	private boolean isRun = true;
 	
 // 메인메뉴
 // ㄴ 길드관리, 상점, 인벤토리, 저장, 로드
@@ -15,7 +17,7 @@ public class Main {
 		sp.weaponSet();
 		sp.armorSet();
 		sp.ringSet();
-		while(true) {
+		while(isRun) {
 			gd.guildTitle();
 			printMenu();
 			menuInput();
@@ -40,13 +42,16 @@ public class Main {
 				gd.inventoryMenu();
 			}
 			else if(num==4) {//저장
-				
+				save();
+				System.out.println("저장 완료!");
 			}
 			else if(num==5) {//로드
-				
+				load();
+				System.out.println("불러오기 완료!");
 			}
 			else if(num==6) {//종료
-				
+				System.out.println("종료합니다");
+				this.isRun = false;
 			}
 			
 		} catch (Exception e) {
@@ -54,31 +59,20 @@ public class Main {
 		
 	}
 	
-
 	
-//	번호, 이름, 레벨, 채력, 공격력, 방어력, 파티여부
+	public void save() {
+		fl.guildSave();
+		fl.playerSave();
+		fl.itemSave();
+		fl.inventorySave();
+	}
 	
-	
-
-	
-//	번호, 이름, 공격력, 가격
-	
-//	인벤토리
-//	ㄴ 착용, 판매
-	
-//	이름, 레벨, 체력, 공격력, 방어력, 파티여부
-//	무기
-//	방어구
-//	반지
-	
-	
-//	파일
-//	길드
-//	인벤토리
-//	아이템
-//	상점
-//	플레이어
-//	메인
+	public void load() {
+		fl.playerLoad();
+		fl.itemLoad();
+		fl.guildLoad();
+		fl.inventoryLoad();
+	}
 	
 	
 	public static void main(String[] args) {

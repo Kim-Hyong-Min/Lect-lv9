@@ -3,14 +3,22 @@ import java.util.ArrayList;
 
 public class Guild {
 	public static Guild instance = new Guild();
+	private Shop sp = Shop.instance;
 	private Unit ut = Unit.instance;
 	ArrayList<Inventory> inven = new ArrayList<>();
 	private String gulidName;
-	private int playerCode;
 	private int guildMoney;
 	private final int maxParty = 4;
 	
 	Guild(){
+	}
+	
+	public void inventoryReset() {
+		this.inven.clear();
+	}
+	
+	public String getGulidName() {
+		return this.gulidName;
 	}
 	
 	public int getGuildMoney() {
@@ -115,6 +123,11 @@ public class Guild {
 		this.guildMoney = 100000;
 	}
 	
+	public void guildSet(String title, int money){
+		this.gulidName = title;
+		this.guildMoney = money;
+	}
+	
 	public void inventoryMenu() {
 		while(true) {
 			System.out.println("1.장비 목록\n2.장비 입기\n3.장비 벗기\n4.뒤로가기");
@@ -143,16 +156,16 @@ public class Guild {
 	public void itemList(){ // 길드 아이템 리스트
 		if(this.inven.size()>0) {
 			for(int i=0; i<this.inven.size(); i++){
-				for(int j=0; j<Shop.item.size(); j++) {
-					if(this.inven.get(i).getItemCode()==Shop.item.get(j).getItemCode()) {
+				for(int j=0; j<this.sp.item.size(); j++) {
+					if(this.inven.get(i).getItemCode()==this.sp.item.get(j).getItemCode()) {
 						if(this.inven.get(i).getItemCode()/1000==1) {//무기
-							System.out.printf("(%d) [%s] 공격력 : %d / 수량 : %d개\n", (i+1), Shop.item.get(j).getName(), Shop.item.get(j).getAtk(), this.inven.get(i).getItemCnt());
+							System.out.printf("(%d) [%s] 공격력 : %d / 수량 : %d개\n", (i+1), this.sp.item.get(j).getName(), this.sp.item.get(j).getAtk(), this.inven.get(i).getItemCnt());
 						}
 						else if(this.inven.get(i).getItemCode()/1000==2) {//갑옷
-							System.out.printf("(%d) [%s] 방어력 : %d / 수량 : %d개\n", (i+1), Shop.item.get(j).getName(), Shop.item.get(j).getDef(), this.inven.get(i).getItemCnt());
+							System.out.printf("(%d) [%s] 방어력 : %d / 수량 : %d개\n", (i+1), this.sp.item.get(j).getName(), this.sp.item.get(j).getDef(), this.inven.get(i).getItemCnt());
 						}
 						else if(this.inven.get(i).getItemCode()/1000==3) {//반지
-							System.out.printf("(%d) [%s] 공격력 : %d / 방어력 : %d / 수량 : %d개\n", (i+1), Shop.item.get(j).getName(), Shop.item.get(j).getAtk(), Shop.item.get(j).getDef(), this.inven.get(i).getItemCnt());
+							System.out.printf("(%d) [%s] 공격력 : %d / 방어력 : %d / 수량 : %d개\n", (i+1), this.sp.item.get(j).getName(), this.sp.item.get(j).getAtk(), this.sp.item.get(j).getDef(), this.inven.get(i).getItemCnt());
 						}
 					}
 				}
@@ -160,6 +173,7 @@ public class Guild {
 		}
 		else System.out.println("보유중인 장비가 없습니다.");
 	}
+	
 	
 	public void guildList() {//길드원 목록
 		System.out.println("====================================================================");

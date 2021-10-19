@@ -2,6 +2,8 @@ package game;
 
 
 public class Player {
+	private Shop sp = Shop.instance;
+	
 //이름, 레벨, 현재 체력, 최대 체력, 공격력, 방어력, 경험치, 파티여부
 	private String name;
 	private int level;
@@ -28,6 +30,27 @@ public class Player {
 		this.exp = 0;
 		this.playerCode = playerCode;
 	}
+	
+	public Player(String name, int level, int Hp, int maxHp, int atk, int def, int exp, String party, int playerCode, int item1, int item2, int item3 ) {
+		this.name = name;
+		this.level = level;
+		this.hp = Hp;
+		this.maxHp = maxHp;
+		this.atk = atk;
+		this.def = def;
+		this.exp = exp;
+		if(party.equals("true")) {
+			this.party = true;
+		}
+		else if(party.equals("false")) {
+			this.party = false;
+		}
+		this.playerCode = playerCode;
+		this.playerItem[0] = item1;
+		this.playerItem[1] = item1;
+		this.playerItem[2] = item1;
+	}
+	
 	
 	public String getPlayerName() {
 		return this.name;
@@ -76,9 +99,9 @@ public class Player {
 	
 	 public String getPlayerItemName(int idx) {
 		  String item = "";
-		  for(int i=0; i<Shop.item.size(); i++) {
-			  if(this.playerItem[idx] == Shop.item.get(i).getItemCode()) {
-				  item += Shop.item.get(i).getName();
+		  for(int i=0; i<sp.item.size(); i++) {
+			  if(this.playerItem[idx] == sp.item.get(i).getItemCode()) {
+				  item += sp.item.get(i).getName();
 			  }
 		  }
 		  return item;
@@ -109,9 +132,9 @@ public class Player {
 				System.out.print("[반지:");
 			}
 			if(this.playerItem[i]!=0) {
-				for(int j=0; j<Main.sp.item.size(); j++) {
-					if(this.playerItem[i]==Main.sp.item.get(j).getItemCode()) {
-						System.out.printf("%s] ",Main.sp.item.get(j).getName());
+				for(int j=0; j<sp.item.size(); j++) {
+					if(this.playerItem[i]==sp.item.get(j).getItemCode()) {
+						System.out.printf("%s] ",sp.item.get(j).getName());
 					}
 				}
 			}
@@ -133,9 +156,9 @@ public class Player {
 				System.out.print("[반지:");
 			}
 			if(this.playerItem[i]!=0) {
-				for(int j=0; j<Main.sp.item.size(); j++) {
-					if(this.playerItem[i]==Main.sp.item.get(j).getItemCode()) {
-						System.out.printf("%s] ",Main.sp.item.get(j).getName());
+				for(int j=0; j<sp.item.size(); j++) {
+					if(this.playerItem[i]==sp.item.get(j).getItemCode()) {
+						System.out.printf("%s] ",sp.item.get(j).getName());
 					}
 				}
 			}
@@ -145,20 +168,20 @@ public class Player {
 	}
 	
 	public void PlayerItemAdd(int itemCode) {
-		for(int i=0; i<Main.sp.item.size(); i++) {
-			if(itemCode==Main.sp.item.get(i).getItemCode()) {
-				this.atk += Main.sp.item.get(i).getAtk();
-				this.def += Main.sp.item.get(i).getDef();
+		for(int i=0; i<sp.item.size(); i++) {
+			if(itemCode==sp.item.get(i).getItemCode()) {
+				this.atk += sp.item.get(i).getAtk();
+				this.def += sp.item.get(i).getDef();
 				break;
 			}
 		}
 	}
 	
 	public void PlayerItemRemove(int itemCode) {
-		for(int i=0; i<Main.sp.item.size(); i++) {
-			if(itemCode==Main.sp.item.get(i).getItemCode()) {
-				this.atk -= Main.sp.item.get(i).getAtk();
-				this.def -= Main.sp.item.get(i).getDef();
+		for(int i=0; i<sp.item.size(); i++) {
+			if(itemCode==sp.item.get(i).getItemCode()) {
+				this.atk -= sp.item.get(i).getAtk();
+				this.def -= sp.item.get(i).getDef();
 				break;
 			}
 		}

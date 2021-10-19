@@ -1,16 +1,32 @@
 package game;
 
 public class Inventory {
+	private String name;
+	private int atk;
+	private int def;
 	private int itemCode;
 	private int itemCnt;
-	private int playerCode;
   
   Inventory(){
   }
   
-  public Inventory(int itemCode, int itemCnt) {//첫구매
+  public Inventory(String name, int atk, int def, int itemCode, int itemCnt) {//첫구매
+	  this.name = name;
+	  this.atk =atk;
+	  this.def= def;
 	  this.itemCode = itemCode;
 	  this.itemCnt = itemCnt;
+  }
+  
+  public String getItemName() {
+	  return this.name;
+  }
+  
+  public int getAtk() {
+	  return this.atk;
+  }
+  public int getDef() {
+	  return this.def;
   }
   
   public int getItemCode() {
