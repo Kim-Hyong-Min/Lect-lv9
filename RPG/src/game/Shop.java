@@ -17,6 +17,7 @@ public class Shop {
 	
 	public void shopMenu() {
 		while(true) {
+			gd.printGuild();
 			System.out.println("1.무기\n2.갑옷\n3.반지\n4.뒤로가기");
 			String input = Shop.sc.next();
 			try {

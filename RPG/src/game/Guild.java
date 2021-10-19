@@ -25,6 +25,12 @@ public class Guild {
 		return this.guildMoney;
 	}
 	
+	public void printGuild() {
+		System.out.println("====================");
+		System.out.printf("길드원 : %d명\n보유하신 금액 : %dg\n보유중인 장비 : %d개\n",ut.player.size(), guildMoney, inven.size());
+		System.out.println("====================");
+	}
+	
 	public void setGuildMoney(String name, int atk, int def, int itemCode, int money) {
 		if(this.guildMoney-money>=0) {
 			if(this.inven.size()==0) {
@@ -81,6 +87,7 @@ public class Guild {
 	
 	public void guildTitle() {
 		System.out.printf("========[%s]========\n",this.gulidName);
+		printGuild();
 	}
 	
 	public void printGuildMoney() {
@@ -91,6 +98,7 @@ public class Guild {
 //	ㄴ 길드목록, 길드원추가, 길드원삭제, 파티원교체, 정렬
 	public void guildMenu() {
 		while(true) {
+			printGuild();
 			System.out.println("1.길드원 목록\n2.길드원 영입\n3.길드원 해고\n4.정렬\n5.뒤로가기");
 			String input = Shop.sc.next();
 			try {
@@ -130,7 +138,8 @@ public class Guild {
 	
 	public void inventoryMenu() {
 		while(true) {
-			System.out.println("1.장비 목록\n2.장비 입기\n3.장비 벗기\n4.뒤로가기");
+			printGuild();
+			System.out.println("1.장비 목록\n2.장비 입기\n3.장비 벗기\n4.장비 판매\n5.뒤로가기");
 			String input = Shop.sc.next();
 			try {
 				int num = Integer.parseInt(input);
@@ -144,6 +153,9 @@ public class Guild {
 					ut.PlayerItemRemove();
 				}
 				else if(num==4) {//뒤로가기
+					itemSell();
+				}
+				else if(num==5) {//뒤로가기
 					break;
 				}
 				
@@ -231,6 +243,35 @@ public class Guild {
 				break;
 			}
 			else if(idx == cnt) {
+				break;
+			}
+			else System.out.println("잘못된 번호 입니다.");
+		}catch (Exception e) {
+		}
+		}
+	}
+	
+	public void itemSell() {
+		itemList();
+		System.out.printf("(%d) 뒤로가기\n",(inven.size()+1));
+		while(true) {
+		System.out.print("번호 입력 : ");
+		String input = Shop.sc.next();
+		try {
+			int num = Integer.parseInt(input)-1;
+			if(num>=0 && num < inven.size()) {
+				int money = 0;
+				for(int i=0; i<sp.item.size(); i++) {
+					if(inven.get(num).getItemCode()==sp.item.get(i).getItemCode()) {
+						money = sp.item.get(i).getPrice();
+					}
+				}
+				inven.remove(num);
+				guildMoney += money;
+				System.out.println("판매 완료!");
+				break;
+			}
+			else if(num==inven.size()) {
 				break;
 			}
 			else System.out.println("잘못된 번호 입니다.");
