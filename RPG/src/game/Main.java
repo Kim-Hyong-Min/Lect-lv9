@@ -25,7 +25,7 @@ public class Main {
 	}
 	
 	public void printMenu() {
-		System.out.println("1.길드관리\n2.상점\n3.인벤토리\n4.저장\n5.로드\n6.종료");
+		System.out.println("1.길드관리\n2.상점\n3.인벤토리\n4.전투\n5.저장\n6.로드\n7.종료");
 	}
 	
 	public void menuInput() {
@@ -41,15 +41,18 @@ public class Main {
 			else if(num==3) {//인벤토리
 				gd.inventoryMenu();
 			}
-			else if(num==4) {//저장
+			else if(num==4) {
+				
+			}
+			else if(num==5) {//저장
 				save();
 				System.out.println("저장 완료!");
 			}
-			else if(num==5) {//로드
+			else if(num==6) {//로드
 				load();
 				System.out.println("불러오기 완료!");
 			}
-			else if(num==6) {//종료
+			else if(num==7) {//종료
 				System.out.println("종료합니다");
 				this.isRun = false;
 			}
