@@ -8,6 +8,7 @@ public class Hero implements Heal, Damage{
 	private int atk;
 	private int def;
 	private int potion;
+	
 	public Hero(){
 		this.MaxHp = 200;
 		this.hp = MaxHp;
@@ -18,6 +19,32 @@ public class Hero implements Heal, Damage{
 	
 	public int getHp() {
 		return this.hp;
+	}
+	
+	public int getAtk() {
+		return this.atk;
+	}
+	
+	public int getDef() {
+		return this.def;
+	}
+	
+	public int getPotion() {
+		return this.potion;
+	}
+	
+	
+	public void setPotion(int potion) {
+		this.potion += potion;
+	}
+	
+	public boolean DeadorAlive() {
+		if(this.hp == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 	
 	public boolean totalHp() {
@@ -33,10 +60,12 @@ public class Hero implements Heal, Damage{
 	public void heal(int point) {
 		if(this.hp != dead) {
 			if(this.hp+point>MaxHp) {
+				System.out.println("체력을 전부 회복했다!");
 				this.hp = MaxHp;
 			}
 			else {
 				this.hp += point;
+				System.out.printf("체력을 %d만큼 회복했다!\n",point);
 			}
 		}
 	}
@@ -53,9 +82,9 @@ public class Hero implements Heal, Damage{
 	
 	public void HeroUi() {
 		System.out.println("==================");
-		System.out.printf("채력[%d/%d]\n",this.hp,this.MaxHp);
-		System.out.printf("공격력[%d] 방어력[%d]\n",this.atk,this.def);
-		System.out.printf("포션 [%d개]\n",this.potion);
+		System.out.printf("[채력 : %d/%d]\n",this.hp,this.MaxHp);
+		System.out.printf("[공격력 : %d] [방어력 : %d]\n",this.atk,this.def);
+		System.out.printf("[포션 : %d개]\n",this.potion);
 		System.out.println("==================");
 	}
 	
@@ -68,5 +97,11 @@ public class Hero implements Heal, Damage{
 			this.def += point;
 			System.out.printf("방어력이 %d만큼 올랐다!\n",point);
 		}
+	}
+	
+	public void HealthUp(int point) {
+		this.MaxHp += point;
+		this.hp += point;
+		System.out.printf("체력이 %d만큼 올랐다!\n",point);
 	}
 }
