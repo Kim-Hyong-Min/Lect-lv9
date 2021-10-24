@@ -21,6 +21,10 @@ public class Hero implements Heal, Damage{
 		return this.hp;
 	}
 	
+	public int getMaxHp() {
+		return this.MaxHp;
+	}
+	
 	public int getAtk() {
 		return this.atk;
 	}
@@ -94,8 +98,14 @@ public class Hero implements Heal, Damage{
 			System.out.printf("공격력이 %d만큼 올랐다!\n",point);
 		}
 		else {
-			this.def += point;
-			System.out.printf("방어력이 %d만큼 올랐다!\n",point);
+			if(this.def<25) {
+				this.def += point;
+				System.out.printf("방어력이 %d만큼 올랐다!\n",point);
+			}
+			else {
+				this.atk += point;
+				System.out.printf("공격력이 %d만큼 올랐다!\n",point);
+			}
 		}
 	}
 	

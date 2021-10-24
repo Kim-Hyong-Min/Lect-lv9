@@ -167,12 +167,15 @@ public class Game {
 							break;
 						}
 						else if(num==3) {
-							if(h.getPotion()>0) {
-								h.setPotion(-1);
-								int rNum = rn.nextInt(10)+25;
-								h.heal(rNum);
+							if(h.getHp()!=h.getMaxHp()) {
+								if(h.getPotion()>0) {
+									h.setPotion(-1);
+									int rNum = rn.nextInt(10)+25;
+									h.heal(rNum);
+								}
+								else System.out.println("포션이 없습니다!");
 							}
-							else System.out.println("포션이 없습니다!");
+							else System.out.println("체력이 이마 다 찼습니다.");
 							break;
 						}
 						else System.out.println("잘못된 입력 입니다.");
@@ -266,12 +269,15 @@ public class Game {
 							break;
 						}
 						else if(num==3) {
-							if(h.getPotion()>0) {
-								h.setPotion(-1);
-								int rNum = rn.nextInt(10)+25;
-								h.heal(rNum);
+							if(h.getHp()!=h.getMaxHp()) {
+								if(h.getPotion()>0) {
+									h.setPotion(-1);
+									int rNum = rn.nextInt(10)+25;
+									h.heal(rNum);
+								}
+								else System.out.println("포션이 없습니다!");
 							}
-							else System.out.println("포션이 없습니다!");
+							else System.out.println("체력이 이마 다 찼습니다.");
 							break;
 						}
 						else System.out.println("잘못된 입력 입니다.");
