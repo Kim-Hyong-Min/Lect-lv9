@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class Game {
 	public static Game getInstance() {return instance;}
 	private Hero h = new Hero();
 	private int MonsterFloor[] = new int [20];
+	private ArrayList<Unit> enemy = new ArrayList<>();
 	// 층수
 	private int floor;
 	private boolean gameRun;
@@ -23,6 +25,19 @@ public class Game {
 			win();
 			dead();
 		}
+	}
+	
+	public void EnemySet() {
+		Unit z = new Unit("애기 좀비", 30, 10, 5, 0);
+		this.enemy.add(z);
+		z = new Unit("중2 좀비", 50, 20, 7, 0);
+		this.enemy.add(z);
+		z = new Unit("대학생 좀비", 80, 30, 10, 1);
+		this.enemy.add(z);
+		z = new Unit("어른 좀비", 100, 40, 12, 1);
+		this.enemy.add(z);
+		z = new Unit("좀비왕", 350, 50, 15, 0);
+		this.enemy.add(z);
 	}
 	
 	private void dead() {
@@ -59,7 +74,7 @@ public class Game {
 	}
 	
 	private void start() {
-		Unit.getInstance().EnemySet();
+		EnemySet();
 		this.floor++;
 		System.out.println("===================");
 		System.out.println("[좀비타워]에 입장했습니다!");
@@ -117,14 +132,14 @@ public class Game {
 		if(MonsterFloor[this.floor-1]!=0 && this.floor<20) {
 			System.out.println("적을 만났다!");
 			while(true) {
-				if(Unit.getInstance().DeadorAlive(MonsterFloor[this.floor-1]-1)){
+				if(enemy.get(MonsterFloor[this.floor-1]-1).DeadorAlive()){
 					break;
 				}
 				if(!h.DeadorAlive()){
 					System.out.println("으악!");
 					break;
 				}
-				Unit.getInstance().PrintEnemy(MonsterFloor[this.floor-1]-1);
+				enemy.get(MonsterFloor[this.floor-1]-1).PrintEnemy();
 				System.out.println("[1]공격\n[2]방어\n[3]포션회복");
 				h.HeroUi();
 				while(true) {
@@ -136,20 +151,20 @@ public class Game {
 							System.out.println("용사의 공격!");
 							int rNum = rn.nextInt(3);
 							if(rNum==0) {
-								int dmg = h.getAtk()*2-Unit.getInstance().EnemyDef(MonsterFloor[this.floor-1]-1);
+								int dmg = h.getAtk()*2-enemy.get(MonsterFloor[this.floor-1]-1).getDef();
 								if(dmg<0) {
 									dmg = 1;
 								}
 								System.out.printf("%d의 데미지!\n",dmg);
-								Unit.getInstance().EnemyHit(MonsterFloor[this.floor-1]-1, dmg);
+								enemy.get(MonsterFloor[this.floor-1]-1).EnemyHit(dmg);
 							}
 							else {
 								int rNum2 = rn.nextInt(5)+5;
-								int dmg = h.getAtk()+rNum2-Unit.getInstance().EnemyDef(MonsterFloor[this.floor-1]-1);
+								int dmg = h.getAtk()+rNum2-enemy.get(MonsterFloor[this.floor-1]-1).getDef();
 								System.out.printf("%d의 데미지!\n",dmg);
-								Unit.getInstance().EnemyHit(MonsterFloor[this.floor-1]-1, dmg);
+								enemy.get(MonsterFloor[this.floor-1]-1).EnemyHit(dmg);
 							}
-							if(Unit.getInstance().DeadorAlive(MonsterFloor[this.floor-1]-1)){
+							if(enemy.get(MonsterFloor[this.floor-1]-1).DeadorAlive()){
 								break;
 							}
 							zombieTrun(MonsterFloor[this.floor-1]-1);
@@ -199,7 +214,7 @@ public class Game {
 		else {
 			System.out.println("좀비의 공격!");
 			int rNum2 = rn.nextInt(10)-3;
-			int dmg = Unit.getInstance().EnemyAtk(idx)-h.getDef()+rNum2;
+			int dmg = enemy.get(MonsterFloor[this.floor-1]-1).getAtk()-h.getDef()+rNum2;
 			if(dmg<=0) {
 				dmg = 1;
 			}
@@ -212,14 +227,14 @@ public class Game {
 		if(this.floor==20) {
 			System.out.println("좀비왕이 나타났다!");
 			while(true) {
-				if(Unit.getInstance().DeadorAlive(MonsterFloor[this.floor-1]-1)){
+				if(enemy.get(MonsterFloor[this.floor-1]-1).DeadorAlive()){
 					break;
 				}
 				if(!h.DeadorAlive()){
 					System.out.println("으악!");
 					break;
 				}
-				Unit.getInstance().PrintEnemy(MonsterFloor[this.floor-1]-1);
+				enemy.get(MonsterFloor[this.floor-1]-1).PrintEnemy();
 				System.out.println("[1]공격\n[2]방어\n[3]포션회복");
 				h.HeroUi();
 				while(true) {
@@ -231,20 +246,20 @@ public class Game {
 							System.out.println("용사의 공격!");
 							int rNum = rn.nextInt(3);
 							if(rNum==0) {
-								int dmg = h.getAtk()*2-Unit.getInstance().EnemyDef(MonsterFloor[this.floor-1]-1);
+								int dmg = h.getAtk()*2-enemy.get(MonsterFloor[this.floor-1]-1).getDef();
 								if(dmg<0) {
 									dmg = 1;
 								}
 								System.out.printf("%d의 데미지!\n",dmg);
-								Unit.getInstance().EnemyHit(MonsterFloor[this.floor-1]-1, dmg);
+								enemy.get(MonsterFloor[this.floor-1]-1).EnemyHit(dmg);
 							}
 							else {
 								int rNum2 = rn.nextInt(5)+5;
-								int dmg = h.getAtk()+rNum2-Unit.getInstance().EnemyDef(MonsterFloor[this.floor-1]-1);
+								int dmg = h.getAtk()+rNum2-enemy.get(MonsterFloor[this.floor-1]-1).getDef();
 								System.out.printf("%d의 데미지!\n",dmg);
-								Unit.getInstance().EnemyHit(MonsterFloor[this.floor-1]-1, dmg);
+								enemy.get(MonsterFloor[this.floor-1]-1).EnemyHit(dmg);
 							}
-							if(Unit.getInstance().DeadorAlive(MonsterFloor[this.floor-1]-1)){
+							if(enemy.get(MonsterFloor[this.floor-1]-1).DeadorAlive()){
 								break;
 							}
 							zombieKingTrun();
@@ -319,8 +334,8 @@ public class Game {
 	}
 	
 	private void potionUp() {
-		if(Unit.getInstance().EnemyPotion(MonsterFloor[this.floor-1]-1)==1) {
-			h.setPotion(Unit.getInstance().EnemyPotion(MonsterFloor[this.floor-1]-1));
+		if(enemy.get(MonsterFloor[this.floor-1]-1).getPotion()==1) {
+			h.setPotion(enemy.get(MonsterFloor[this.floor-1]-1).getPotion());
 			System.out.println("주머니를 뒤져보니 포션이 나왔다!");
 			
 		}

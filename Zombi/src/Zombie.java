@@ -1,12 +1,12 @@
 
-public class Zombie implements Damage{
+public abstract class Zombie implements Damage{
 	// 체력, 공격력, 방어력
-	private String name;
-	private int hp;
-	private int MaxHp;
-	private int atk;
-	private int def;
-	private int potion;
+	public String name;
+	public int hp;
+	public int MaxHp;
+	public int atk;
+	public int def;
+	public int potion;
 	
 	public Zombie(String name, int MaxHp, int atk, int def, int potion) {
 		this.name = name;
@@ -17,29 +17,17 @@ public class Zombie implements Damage{
 		this.potion = potion;
 	}
 	
-	public String getName() {
-		return this.name;
-	}
+	public abstract String getName();
 	
-	public int getHp() {
-		return this.hp;
-	}
+	public abstract int getHp();
 	
-	public int getMaxHp() {
-		return this.MaxHp;
-	}
+	public abstract int getMaxHp();
 	
-	public int getAtk() {
-		return this.atk;
-	}
+	public abstract int getAtk();
 	
-	public int getDef() {
-		return this.def;
-	}
+	public abstract int getDef();
 	
-	public int getPotion() {
-		return this.potion;
-	}
+	public abstract int getPotion();
 
 	@Override
 	public void damage(int dmg) {
