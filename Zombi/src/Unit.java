@@ -9,8 +9,8 @@ interface Damage{
 	public void damage(int dmg);
 }
 
-interface attack{
-	
+interface Attack{
+	public void attack(int idx, int def);
 }
 
 
@@ -28,8 +28,6 @@ public class Unit extends Zombie{
 			return true;
 		}
 	}
-	
-
 	
 	public void EnemyHit(int dmg) {
 		super.damage(dmg);
@@ -70,6 +68,24 @@ public class Unit extends Zombie{
 	@Override
 	public int getPotion() {
 		return super.potion;
+	}
+
+	@Override
+	public void attack(int idx, int def) {
+		int rNum = Game.rn.nextInt(5);
+		if(rNum == 0) {
+			System.out.println("좀비가 멍때리고 있다...");
+		}
+		else {
+			System.out.println("좀비의 공격!");
+			int rNum2 = Game.rn.nextInt(10)-3;
+			int dmg = getAtk()+rNum2-def;
+			if(dmg<=0) {
+				dmg = 1;
+			}
+			System.out.printf("%d의 데미지!\n",dmg);
+			Game.getHero().damage(dmg);
+		}
 	}
 	
 }

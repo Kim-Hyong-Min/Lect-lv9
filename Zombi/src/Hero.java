@@ -1,8 +1,6 @@
 
-public class Hero implements Heal, Damage{
+public class Hero implements Heal, Damage, Attack{
 	// 체력, 공격력, 방어력, (물약)
-	private static Hero instance = new Hero();
-	public Hero getInstance() {return instance;}
 	private int hp;
 	private int MaxHp;
 	private int atk;
@@ -113,5 +111,26 @@ public class Hero implements Heal, Damage{
 		this.MaxHp += point;
 		this.hp += point;
 		System.out.printf("체력이 %d만큼 올랐다!\n",point);
+	}
+
+	@Override
+	public void attack(int idx, int def) {
+		System.out.println("용사의 공격!");
+		int rNum = Game.rn.nextInt(3);
+		if(rNum==0) {
+			int dmg = this.atk*2-def;
+			if(dmg<0) {
+				dmg = 1;
+			}
+			System.out.printf("%d의 데미지!\n",dmg);
+			Game.getInstance().damageSet(idx, dmg);
+		}
+		else {
+			int rNum2 = Game.rn.nextInt(5)+5;
+			int dmg = this.atk+rNum2-def;
+			System.out.printf("%d의 데미지!\n",dmg);
+			Game.getInstance().damageSet(idx, dmg);
+		}
+		
 	}
 }

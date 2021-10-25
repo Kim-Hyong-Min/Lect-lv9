@@ -1,5 +1,5 @@
 
-public abstract class Zombie implements Damage{
+public abstract class Zombie implements Damage , Attack{
 	// 체력, 공격력, 방어력
 	public String name;
 	public int hp;
