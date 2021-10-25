@@ -9,6 +9,10 @@ interface Damage{
 	public void damage(int dmg);
 }
 
+interface attack{
+	
+}
+
 
 public class Unit extends Zombie{
 	public Unit(String name, int MaxHp, int atk, int def, int potion) {
