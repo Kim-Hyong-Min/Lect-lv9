@@ -20,6 +20,13 @@ public abstract class Hakgua {
 		return this.HakguaName;
 	}
 	
+	public String getPro_Name() {
+		return this.pro_Name;
+	}
+	public String getSubPro_Name() {
+		return this. subPro_Name;
+	}
+	
 	public int getHakguaNum() {
 		return this.HakguaNum;
 	}
