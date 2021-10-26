@@ -16,7 +16,13 @@ public abstract class Hakgua {
 		this.subPro_Name = subPro_Name;
 	}
 	
+	public String getHakguaName() {
+		return this.HakguaName;
+	}
 	
+	public int getHakguaNum() {
+		return this.HakguaNum;
+	}
 	
 	public void checkHakgua() {
 		

@@ -3,12 +3,16 @@ package Manager;
 import java.util.ArrayList;
 
 import source.Hakgua;
+import source.Student;
 import source.Subject;
 
 public class SubjectManager implements input{
+	private static SubjectManager instance = new SubjectManager();
+	public static SubjectManager getInstance() {return instance;};
+	
 	// 강의 등록, 학과 등록
-	ArrayList<Hakgua> hakgua = new ArrayList<>();
-	ArrayList<Subject> subject = new ArrayList<>();
+	public ArrayList<Hakgua> hakgua = new ArrayList<>();
+	public ArrayList<Subject> subject = new ArrayList<>();
 	
 	public void setup() {
 		Hakgua h = new Hakgua("토목과", 10001, "둘리", "도우너"){};
@@ -37,6 +41,15 @@ public class SubjectManager implements input{
 		s = new Subject("인생이란 무엇인가", "스티븐", 10005, 20007, 40);
 		subject.add(s);
 	}
+	
+	public void hakguaChoice() {
+		while(true) {
+			for(int i=0; i<hakgua.size(); i++) {
+				
+			}
+		}
+	}
+	
 	
 	public void printAllSubject() {
 		
