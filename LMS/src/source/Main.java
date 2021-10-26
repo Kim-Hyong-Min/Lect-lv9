@@ -1,9 +1,12 @@
+package source;
 import java.util.Scanner;
 
 import Manager.StudentManager;
 
+
+
 public class Main {
-	private Scanner sc = new Scanner(System.in);
+	public Scanner sc = new Scanner(System.in);
 	private static Main instance = new Main();
 	public static Main getInstance() {return instance;};
 	// 切积 殿废, 荐碍 脚没, 己利 包府
