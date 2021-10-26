@@ -7,7 +7,7 @@ public abstract class Hakgua {
 	private String pro_Name;
 	private String subPro_Name;
 	
-	Hakgua(){}
+	Hakgua(){};
 	
 	public Hakgua(String HakguaName, int HakguaNum, String pro_Name, String subPro_Name){
 		this.HakguaName = HakguaName;
@@ -18,6 +18,8 @@ public abstract class Hakgua {
 	
 	
 	
-	public abstract void checkHakgua();
+	public void checkHakgua() {
+		
+	}
 	
 }

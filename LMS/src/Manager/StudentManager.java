@@ -26,5 +26,12 @@ public class StudentManager implements input{
 		String name = sc.next();
 		System.out.print("나이 입력 : ");
 		String age = sc.next();
+		
+		if(student.size()>0) {
+			
+		}
+		else {
+			
+		}
 	}
 }
