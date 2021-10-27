@@ -12,7 +12,9 @@ public class Main {
 	public static Main getInstance() {return instance;};
 	// 학생 등록, 수강 신청, 성적 관리 - 완료
 	// 관리자 모드
-	// ㄴ 수업 등록, 학생 관리(추가/삭제), 전체 수업/학생/성적 조회
+	// ㄴ 수업 관리(추가/삭제)
+	// ㄴ 학생 관리(추가/삭제)
+	// ㄴ 전체 수업/학생/성적 조회
 	
 	private void run() {
 		
