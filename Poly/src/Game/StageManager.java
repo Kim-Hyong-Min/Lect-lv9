@@ -11,8 +11,11 @@ interface input{
 public class StageManager implements input{
 	private static StageManager instance = new StageManager();
 	public static StageManager getInstance() {return instance;}
+	private UnitManager um = new UnitManager();
+	private int level = 1;
 	
 	public void StageMenu() {
+		um.playerSetup();
 		while(true) {
 			Stagetitle();
 			System.out.println("====================");
@@ -21,7 +24,8 @@ public class StageManager implements input{
 			try {
 				int num = Integer.parseInt(input);
 				if(num==1) {
-					
+					um.MonsterSetup(4, level);
+					um.printBattleUi();
 				}
 				else if(num==2) {
 					break;

@@ -19,5 +19,8 @@ public class Main {
 	
 	// 전부 사망시 종료 : 각 상대별 전체 사망자수 총합으로 비교
 	// 한명이라도 남으면 전투 종료 후 다음 스테이지
-	
+	public static void main(String[] args) {
+		StageManager sm = new StageManager();
+		sm.StageMenu();
+	}
 }
