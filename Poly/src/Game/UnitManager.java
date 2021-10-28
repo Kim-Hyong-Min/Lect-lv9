@@ -8,6 +8,6 @@ public class UnitManager {
 	
 	
 	public void setup() {
-		
+		Unit u = new Unit() {""};
 	}
 }
