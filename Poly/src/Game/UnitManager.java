@@ -23,10 +23,10 @@ public class UnitManager implements input{
 			int num = rn.nextInt(Monsters.length);
 			try {
 				Class<?> list = Class.forName(path + Monsters[num]);	
-				Object unit = list.newInstance();
+				Object unit = list.getDeclaredConstructor().newInstance();
 				Unit temp = (Unit)unit;
 				int Max_hp = rn.nextInt(100) + 100*level;
-				int atk = rn.nextInt(10) + 10+level;
+				int atk = rn.nextInt(10) + 20+level;
 				temp.MosterSet(Max_hp, atk);
 				enemy.add(temp);
 			} catch (Exception e) {e.printStackTrace();}
