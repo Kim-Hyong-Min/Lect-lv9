@@ -9,10 +9,11 @@ public class Player extends Unit{
 		System.out.printf("[%s] 1.[공격] 2.[스킬]\n",this.name);
 	}
 	
+	
 	public void printPlayerSkill() {
 		System.out.println("==== 스 킬 ====");
 		if(this.name.equals("전 사")) {
-			System.out.println("1.[방어] [MP:10]: 적의 공격을 1회 막는다\n2.[강타] [MP:10]: 적에게 2배의 데미지를 준다");
+			System.out.println("1.[휘두르기] [MP:5]: 적에게 150의 데미지를 준다\n2.[강타] [MP:10]: 적에게 2배의 데미지를 준다");
 		}
 		else if(this.name.equals("마법사")) {
 			System.out.println("1.[화염비] [MP:20]: 모든적에게 20의 데미지를 준다\n2.[얼음창] [MP:15]: 적에게 3배의 데미지를 준다");

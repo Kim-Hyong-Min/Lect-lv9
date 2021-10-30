@@ -7,7 +7,7 @@ public class UnitManager implements input{
 	private static UnitManager instance = new UnitManager();
 	public static UnitManager getInstance() {return instance;}
 	Vector<Player>party = new Vector<>();
-	Vector<Unit>enemy = new Vector<>();
+	Vector<Unit>enemy;
 	String path = "Game.";
 	String Monsters[] = {"UnitGhost" , "UnitGoblin" , "UnitOrc", "UnitSlime" ,};
 	
@@ -19,6 +19,7 @@ public class UnitManager implements input{
 	}
 	
 	public void MonsterSetup(int cnt, int level) {
+		this.enemy = new Vector<>();
 		for(int i = 0; i < cnt;  i++) {
 			int num = rn.nextInt(Monsters.length);
 			try {
@@ -42,6 +43,14 @@ public class UnitManager implements input{
 		System.out.println("===== Àû  ±º =====");
 		for(int i=0; i<this.enemy.size(); i++) {
 			this.enemy.get(i).printEnemyUnit();
+		}
+	}
+	
+	public void playerMpSet() {
+		for(int i=0; i<this.party.size(); i++) {
+			if(!this.party.get(i).getDead()) {
+				this.party.get(i).setMp();
+			}
 		}
 	}
 }
