@@ -27,21 +27,21 @@ public class GameManager implements input{
 	public void ZombieSet() { // String name, int Max_Hp, int Atk,  int Def, int Potion(0/1)
 		zom = new ArrayList<>();
 		int rNum = rn.nextInt(2);
-		Zombie z = new Zombie("애기 좀비", 100, 5, 0, rNum) {};
+		Zombie z = new Zombie("애기 좀비", 50, 5, 0, rNum) {};
 		zom.add(z);
 		rNum = rn.nextInt(2);
-		z = new Zombie("청년 좀비", 200, 10, 5, rNum) {};
+		z = new Zombie("청년 좀비", 100, 10, 5, rNum) {};
 		zom.add(z);
 		rNum = rn.nextInt(2);
-		z = new Zombie("엄마 좀비", 300, 20, 10, rNum) {};
+		z = new Zombie("엄마 좀비", 200, 20, 10, rNum) {};
 		zom.add(z);
 		rNum = rn.nextInt(2);
-		z = new Zombie("아빠 좀비", 400, 30, 15, rNum) {};
+		z = new Zombie("아빠 좀비", 300, 30, 15, rNum) {};
 		zom.add(z);
 	}
 	
 	public void ZombieKingSet() {
-		ZombieKing z = new ZombieKing("좀비킹", 600, 40, 20, 0) {};
+		ZombieKing z = new ZombieKing("좀비킹", 500, 40, 20, 0) {};
 		this.zk = z;
 	}
 	
@@ -71,9 +71,11 @@ public class GameManager implements input{
 		while(run) {
 			menu();
 			battleStart();
+			finalBattle();
 			playerCheck();
+			endCheck();
 		}
-		
+		ending();
 	}
 	
 	public void playerCheck() {
@@ -82,12 +84,18 @@ public class GameManager implements input{
 		}
 	}
 	
+	public void endCheck() {
+		if(this.level == 20) {
+			run = false;
+		}
+	}
+	
 	public void ending() {
-		if(this.p.deadCheck()) {
-			System.out.println("용감한 %d는 결국 모든 좀비를 무찌르고 평화를 가져왔다...");
+		if(!this.p.deadCheck()) {
+			System.out.printf("용감한 %s는 결국 모든 좀비를 무찌르고 평화를 가져왔다...\n",this.p.getName());
 		}
 		else {
-			
+			System.out.printf("%s는 결국 좀비가 되고 말았다...\n",this.p.getName());
 		}
 	}
 	
@@ -139,13 +147,21 @@ public class GameManager implements input{
 			System.out.println("적이 나타났다!");
 			battle(this.zomLevel[this.level-1]-1);
 		}
-		else System.out.println("아무도 없었다...");
+		else {
+			if(this.level<20) {
+				System.out.println("아무도 없었다...");
+			}
+		}
 	}
 	
 	public void battle(int idx) {
-		while(true) {
+		while(this.level<20) {
 			if(this.zom.get(idx).deadCheck()) {
 				System.out.println("승리!");
+				if(this.zom.get(this.zomLevel[this.level-1]-1).getPotion()==1) {
+					this.p.setPotion(this.zom.get(this.zomLevel[this.level-1]-1).getPotion());
+					System.out.println("[포션]을 획득했다!");
+				}
 				break;
 			}
 			if(this.p.deadCheck()) {
@@ -171,7 +187,7 @@ public class GameManager implements input{
 			try {
 				int num = Integer.parseInt(input);
 				if(num == 1) {
-					this.p.attack();
+					this.p.attack(this.zom.get(idx).getDef());
 					break;
 				}
 				else if(num == 2) {
@@ -192,10 +208,10 @@ public class GameManager implements input{
 	
 	
 	public void zombieTurn(int idx) {
-		if(this.p.getState()>0) {
+		if(this.p.getState()>=0) {
 			this.zom.get(idx).damage(this.p.getState());
 			if(!this.zom.get(idx).deadCheck()) {
-				this.zom.get(idx).attack();
+				this.zom.get(idx).attack(this.p.getDef());
 				this.p.damage(this.zom.get(idx).getState());
 			}
 			this.p.setState(0);
@@ -206,4 +222,97 @@ public class GameManager implements input{
 			this.p.setState(0);
 		}
 	}
+	
+	public void finalBattle() {
+		if(this.level==20) {
+			while(true) {
+				if(this.zk.deadCheck()) {
+					System.out.println("승리!");
+					break;
+				}
+				if(this.p.deadCheck()) {
+					System.out.println("패배...");
+					break;
+				}
+				playerTurn();
+				zombieKingTurn();
+			}
+		}
+	}
+	
+	public void playerTurn() {
+		while(true) {
+			System.out.println("==== 보 스 ====");
+			this.zk.printUi();
+			System.out.println("=============");
+			this.p.printUi();
+			this.p.printPotion();
+			System.out.println("=============");
+			System.out.println("[1]공격\n[2]방어\n[3]포션");
+			System.out.print("입력 : ");
+			String input = sc.next();
+			try {
+				int num = Integer.parseInt(input);
+				if(num == 1) {
+					this.p.attack(this.zk.getDef());
+					break;
+				}
+				else if(num == 2) {
+					this.p.defense();
+					break;
+				}
+				else if(num == 3) {
+					if(this.p.getPotion()>0) {
+						this.p.drinkPotion();
+					}
+					else System.out.println("포션이 없습니다.");
+				}
+			} catch (Exception e) {
+			}
+		}
+	}
+	
+	public void zombieKingTurn() {
+		if(this.p.getState()>=0) {
+			this.zk.damage(this.p.getState());
+			if(!this.zk.deadCheck()) {
+				int rNum = rn.nextInt(4);
+				
+				if(this.zk.getState() != 1) {
+					if(rNum == 0) {
+						this.zk.attack(this.p.getDef());
+						this.p.damage(this.zk.getState());
+						this.zk.setState(0);
+					}
+					else if(rNum == 1) {
+						this.zk.slap();
+						this.p.damage(this.zk.getState());
+						this.zk.setState(0);
+					}
+					else if(rNum == 2) {
+						this.zk.lazer();
+					}
+					else if(rNum == 3) {
+						this.zk.sleep();
+					}
+					
+				}
+				else {
+					this.zk.lazer();
+					this.p.damage(this.zk.getState());
+					this.zk.setState(0);
+				}
+
+			}
+			this.p.setState(0);
+		}
+		else if(this.p.getState()==-1) {
+			System.out.println("[방어] 성공!");
+			System.out.printf("%s는 공격할수가 없었다...\n",this.zk.getName());
+			this.zk.setState(0);
+			this.p.setState(0);
+		}
+	}
+	
+	
 }

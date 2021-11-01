@@ -7,8 +7,11 @@ public class Zombie extends Unit  implements Attack, Damage, input{
 	}
 	
 	@Override
-	public void attack() {
-		int rNum = rn.nextInt(10)+this.getAtk()-5;
+	public void attack(int num) {
+		int rNum = rn.nextInt(10)+this.getAtk()-5-num;
+		if(rNum<=0) {
+			rNum=1;
+		}
 		System.out.printf("%s는 %d의 데미지를 주었다!\n",this.getName(), rNum);
 		setState(rNum);
 	}

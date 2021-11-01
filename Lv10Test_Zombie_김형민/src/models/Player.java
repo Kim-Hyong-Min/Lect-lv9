@@ -23,7 +23,7 @@ public class Player extends Unit implements Attack, Damage, input{
 	}
 	
 	public void sleep() {
-			int rNum = rn.nextInt(10)+20;
+			int rNum = rn.nextInt(10)+30;
 			this.setHp(rNum);
 	}
 	
@@ -34,13 +34,13 @@ public class Player extends Unit implements Attack, Damage, input{
 	public void drinkPotion() {
 		System.out.println("[포션]을 마셨다!");
 		this.setPotion(-1);
-		int rNum = rn.nextInt(5)+30;
+		int rNum = rn.nextInt(5)+50;
 		this.setHp(rNum);
 	}
 	
 	@Override
-	public void attack() {
-		int rNum = rn.nextInt(10)+this.getAtk()-5;
+	public void attack(int num) {
+		int rNum = rn.nextInt(10)+this.getAtk()-5-num;
 		System.out.printf("%s는 %d의 데미지를 주었다!\n",this.getName(), rNum);
 		setState(rNum);
 	}

@@ -1,7 +1,7 @@
 package models;
 
 interface Attack{
-	public void attack();
+	public void attack(int num);
 }
 
 interface Damage{
