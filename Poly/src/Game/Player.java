@@ -1,6 +1,10 @@
 package Game;
 
+import java.util.Vector;
+
 public class Player extends Unit{
+	Vector<Inventory>item = new Vector<>();
+	
 	Player(String name , int hp , int mp ,int atk){
 		super(name, hp , mp, atk);
 	}
