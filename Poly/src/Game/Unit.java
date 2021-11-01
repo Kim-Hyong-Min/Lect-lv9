@@ -40,7 +40,7 @@ public abstract class Unit { // 이름, 전체 채력, 현재 채력, 전체 마나, 현재 마나
 	}
 	
 	public int checkHp() {
-		int num = this.Max_Mp - this.hp;
+		int num = this.Max_Hp - this.hp;
 		return num;
 	}
 	
@@ -75,7 +75,7 @@ public abstract class Unit { // 이름, 전체 채력, 현재 채력, 전체 마나, 현재 마나
 	public void heal(int num) {
 		if(this.hp+num > this.Max_Hp){
 			this.hp = this.Max_Hp;
-			System.out.printf("[%s]이(가) [%d]만큼 회복했다!\n", this.name, this.Max_Hp-this.hp);
+			System.out.printf("[%s]이(가) 체력을 모두 회복했다!\n", this.name, this.Max_Hp-this.hp);
 		}
 		else {
 			this.hp += num;
