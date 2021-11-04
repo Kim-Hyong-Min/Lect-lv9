@@ -64,12 +64,12 @@ class Game extends JPanel implements ActionListener {
 	public static int front[] = new int[NUM];
 	public static int back[] = new int[NUM];
 	public static int check[] = new int[NUM];
-	public static int cnt = 1;
+	public static int cnt;
 
 	public Game() {
 		setGame();
 		setLayout(null);
-		setBounds(0, 0, MyJFrame.total, MyJFrame.total);
+		setBounds(0, 0, MyJFrame.total-100, MyJFrame.total-100);
 		setButton();
 	}
 
@@ -105,18 +105,18 @@ class Game extends JPanel implements ActionListener {
 		int h = MyJFrame.total / 2 - 100 * 5 / 2;
 		for (int i = 0; i < this.NUM; i++) {// 0,100,200,300,400 / 5,10,15,20
 			if (i != 0 && i % 5 == 0) {
-				h += 100;
+				h += 100+3;
 				w = MyJFrame.total / 2 - 100 * 5 / 2;
 			}
 			this.number[i] = new JButton();
 			this.number[i].setBounds(w, h, 100, 100);
-			this.number[i].setBackground(new Color(255, 208, 127));
+			this.number[i].setBackground(new Color(211, 228, 205));
 			this.number[i].addActionListener(this);
 			this.number[i].setFont(new Font("", Font.BOLD, 20));
 			this.number[i].setText(String.valueOf(this.front[i]));
 
 			add(this.number[i]);
-			w += 100;
+			w += 100+3;
 		}
 	}
 
@@ -126,13 +126,14 @@ class Game extends JPanel implements ActionListener {
 		JButton push = (JButton) e.getSource();
 
 		for (int i = 0; i < this.NUM; i++) {
+			
 			if (push == this.number[i] && this.number[i].getText().equals(String.valueOf(cnt))) {
 				if (cnt <= this.NUM) {// 1~25
-					this.number[i].setBackground(new Color(255, 130, 67));
+					this.number[i].setBackground(new Color(153, 167, 153));
 					this.number[i].setFont(new Font("", Font.BOLD, 20));
 					this.number[i].setText(String.valueOf(this.back[i]));
 				} else {// 26~50
-					this.number[i].setBackground(new Color(255, 208, 127));
+					this.number[i].setBackground(new Color(254, 245, 237));
 					this.number[i].setFont(new Font("", Font.BOLD, 20));
 					this.number[i].setText("");
 				}
@@ -177,7 +178,7 @@ class MyJFrame extends JFrame implements ActionListener, Runnable {
 		Game.front = new int[Game.NUM];
 		Game.back = new int[Game.NUM];
 		Game.check = new int[Game.NUM];
-		Game.cnt = 1;
+		Game.cnt = 0;
 		min = 0;
 		sec = 0;
 		finish = true;
@@ -190,17 +191,25 @@ class MyJFrame extends JFrame implements ActionListener, Runnable {
 	private static void reset() {
 		Game.setGame();
 		for (int i = 0; i < Game.NUM; i++) {
-			Game.number[i].setBackground(new Color(255, 208, 127));
+			Game.number[i].setBackground(new Color(211, 228, 205));
 			Game.number[i].setFont(new Font("", Font.BOLD, 20));
 			Game.number[i].setText(String.valueOf(Game.front[i]));
 		}
 	}
 
 	private void setReset() {
+		
+		finish = true;
+		jb.setText("ready");
+		
 		re.setBounds(350, 700, 100, 50);
-		re.setBackground(new Color(47, 134, 166));
+//		re.setBackground(new Color(255, 204, 210));
 		re.setFont(new Font("", Font.BOLD, 15));
-		re.setText("RESET");
+		
+		re.setText("START");
+		re.setBackground(new Color(255, 146, 146));
+		
+//		re.setText("RESET");
 		re.addActionListener(this);
 		add(re);
 	}
@@ -248,22 +257,15 @@ class MyJFrame extends JFrame implements ActionListener, Runnable {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
 		if (this.re == e.getSource() && finish == false) { // 시간 리셋, front/back/check 리셋, cnt 리셋, 버튼 세팅 리셋
-			Game.front = new int[Game.NUM];
-			Game.back = new int[Game.NUM];
-			Game.check = new int[Game.NUM];
-			Game.cnt = 1;
-			min = 0;
-			sec = 0;
-			finish = true;
-			jb.setText("ready");
-			re.setText("START");
-			re.setBackground(new Color(47, 221, 146));
-			reset();
+			reStart();
 		} else if (this.re == e.getSource() && finish == true) {
+			Game.cnt = 1;
 			finish = false;
 			re.setText("RESET");
-			re.setBackground(new Color(47, 134, 166));
+			re.setBackground(new Color(255, 204, 210));
 			문제02.run();
 		}
 
