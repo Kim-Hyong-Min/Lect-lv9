@@ -292,12 +292,6 @@ public class ¹®Á¦02 {
 			thread.start();
 	}
 	
-	public static void reRun() {
-		Thread thread2 = new Thread(mf);
-		thread2.start();
-	}
-	
-	
 	public static void main(String[] args) {
 		run();
 
