@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -63,9 +65,10 @@ class Object{
 	}
 }
 
-class paintPanel extends JPanel implements MouseListener, MouseMotionListener{
+class paintPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener{
 	private final int SIZE = 800;
 	private boolean isRun;
+	private boolean check;
 	private Object nemo = null;
 	private int Mx;
 	private int My;
@@ -80,6 +83,7 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener{
 		setNemo();
 		addMouseListener(this);
 		addMouseMotionListener(this);
+		addKeyListener(this);
 	}
 
 	private void setNemo() {
@@ -92,47 +96,102 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener{
 		if(this.isRun) {
 			this.Dx = e.getX();
 			this.Dy = e.getY();
+			int w = Math.abs(this.Mx-this.Dx);
+			int h = Math.abs(this.My-this.Dy);
 			
 			if(this.Mx>this.Dx) { // x --; 
 				if(this.My>this.Dy) { // y --;
-					System.out.println("하상");
-					int x =	this.Dx;
-					int y =	this.Dy;
-					int w = this.Mx-this.Dx;
-					int h = this.My-this.Dy;
-					this.nemo.setX(x);
-					this.nemo.setY(y);
-					this.nemo.setW(w);
-					this.nemo.setH(h);
+					if(!this.check) {
+						int x =	this.Dx;
+						int y =	this.Dy;
+						this.nemo.setX(x);
+						this.nemo.setY(y);
+						this.nemo.setW(w);
+						this.nemo.setH(h);
+					}
+					else {
+						if(h>w) {
+							int x =	this.Mx-h;
+							int y =	this.My-h;
+							this.nemo.setX(x);
+							this.nemo.setY(y);
+							this.nemo.setW(h);
+							this.nemo.setH(h);
+
+						}
+						else {
+							int x =	this.Mx-w;
+							int y =	this.My-w;
+							this.nemo.setX(x);
+							this.nemo.setY(y);
+							this.nemo.setW(w);
+							this.nemo.setH(w);
+						}
+					}
 					
 				}
 				else if(this.My<this.Dy) { // y ++;
-					System.out.println("하하");
-					int x =	this.Dx;
-					int w = this.Mx-this.Dx;
-					int h = this.Dy-this.My;
-					this.nemo.setX(x);
-					this.nemo.setW(w);
-					this.nemo.setH(h);
+					if(!this.check) {
+						int x =	this.Dx;
+						this.nemo.setX(x);
+						this.nemo.setW(w);
+						this.nemo.setH(h);
+					}
+					else {
+						if(h>w) {
+							int x = this.Mx-h;
+							this.nemo.setX(x);
+							this.nemo.setW(h);
+							this.nemo.setH(h);
+						}
+						else {
+							int x = this.Mx-w;
+							this.nemo.setX(x);
+							this.nemo.setW(w);
+							this.nemo.setH(w);
+						}
+					}
 				}
 			}
 			else if(this.Mx<this.Dx) { // x ++;
 				if(this.My>this.Dy) { // y --;
-					System.out.println("상상");
-					int y =	this.Dy;
-					int w = this.Dx-this.Mx;
-					int h = this.My-this.Dy;
-					this.nemo.setY(y);
-					this.nemo.setW(w);
-					this.nemo.setH(h);
+					if(!this.check) {
+						int y =	this.Dy;
+						this.nemo.setY(y);
+						this.nemo.setW(w);
+						this.nemo.setH(h);
+					}
+					else {
+						if(h>w) {
+							int y =	this.My-h;
+							this.nemo.setY(y);
+							this.nemo.setW(h);
+							this.nemo.setH(h);
 
+						}
+						else {
+							int y =	this.My-w;
+							this.nemo.setY(y);
+							this.nemo.setW(w);
+							this.nemo.setH(w);
+						}
+					}
 				}
 				else if(this.My<this.Dy) { // y ++;
-					System.out.println("상하");
-					int w = this.Dx-this.Mx;
-					int h = this.Dy-this.My;
-					this.nemo.setW(w);
-					this.nemo.setH(h);
+					if(!this.check) {
+						this.nemo.setW(w);
+						this.nemo.setH(h);
+					}
+					else {
+						if(h>w) {
+							this.nemo.setW(h);
+							this.nemo.setH(h);
+						}
+						else {
+							this.nemo.setW(w);
+							this.nemo.setH(w);
+						}
+					}
 				}
 			}
 		}
@@ -160,13 +219,11 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener{
 		this.My = e.getY();
 		this.nemo.setX(Mx);
 		this.nemo.setY(My);
-		System.out.printf("%d : %d\n",Mx, My);
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.isRun = false;
-		System.out.printf("%d : %d\n",Dx, Dy);
 		this.nemo.setC(Color.blue);
 	}
 
@@ -191,6 +248,29 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener{
 		
 		requestFocusInWindow();
 		repaint();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_SHIFT) {
+			this.check = true;
+			System.out.println(this.check);
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == e.VK_SHIFT) {
+			this.check = false;
+			System.out.println(this.check);
+		}	
 	}
 }
 
