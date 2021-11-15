@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -11,6 +13,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -67,21 +70,32 @@ class Object {
 	}
 }
 
-class paintPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
+class paintPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener, ActionListener {
 	private final int SIZE = 800;
 	private boolean isRun;
 	private boolean check;
 	private ArrayList<Object> nemos = new ArrayList<>();
-	private int cnt;
+	private ArrayList<Object> circles = new ArrayList<>();
+	
+	private int shape;
+	private final int Rect = 0;
+	private final int Cir = 1;
+	private final int Tri = 2;
+	
 	private int Mx;
 	private int My;
 
 	private int Dx;
 	private int Dy;
+	
+	String[] btnText = {"¡à","¡Û","¡â"};
+	JButton[] btn = new JButton[3];
 
 	public paintPanel() {
 		setLayout(null);
 		setBounds(0, 0, SIZE, SIZE);
+		
+		setButton();
 
 		setNemo();
 		addMouseListener(this);
@@ -89,9 +103,24 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 		addKeyListener(this);
 	}
 
+	private void setButton() {
+		int x = 0;
+		int y = 0;
+		for(int i=0; i<this.btn.length; i++) {
+			this.btn[i] = new JButton();
+			this.btn[i].setText(this.btnText[i]);
+			this.btn[i].setBounds(x, y, 50, 50);
+			this.btn[i].addActionListener(this);
+			add(this.btn[i]);
+			x+=50;
+		}
+		
+	}
+
 	private void setNemo() {
 		Object temp = new Object(0, 0, 0, 0, Color.white);
 		this.nemos.add(temp);
+		this.circles.add(temp);
 	}
 
 	@Override
@@ -117,7 +146,15 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 				rY = this.My - h;
 			}
 			Object temp = new Object(rX, rY, w, h, Color.black);
-			this.nemos.set(this.cnt, temp);
+			if(this.shape==Rect) {
+				this.nemos.set(this.nemos.size()-1, temp);
+			}
+			else if(this.shape==Cir) {
+				this.circles.set(this.circles.size()-1, temp);
+			}
+			else if(this.shape==Tri) {
+				
+			}
 			
 		}
 
@@ -140,18 +177,37 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 		this.isRun = true;
 		this.Mx = e.getX();
 		this.My = e.getY();
-		this.nemos.get(this.cnt).setX(Mx);
-		this.nemos.get(this.cnt).setY(My);
+		if(this.shape==Rect) {
+			this.nemos.get(this.nemos.size()-1).setX(Mx);
+			this.nemos.get(this.nemos.size()-1).setY(My);
+		}
+		else if(this.shape==Cir) {
+			this.circles.get(this.circles.size()-1).setX(Mx);
+			this.circles.get(this.circles.size()-1).setY(My);
+		}
+		else if(this.shape==Tri) {
+			
+		}
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.isRun = false;
-		this.nemos.get(this.cnt).setC(Color.blue);
-		Object temp = new Object(0, 0, 0, 0, Color.white);
-		this.nemos.add(temp);
-		System.out.println(this.nemos.size());
-		this.cnt++;
+		
+		if(this.shape==Rect) {
+			this.nemos.get(this.nemos.size()-1).setC(Color.blue);
+			Object temp = new Object(0, 0, 0, 0, Color.white);
+			this.nemos.add(temp);
+		}
+		else if(this.shape==Cir) {
+			this.circles.get(this.circles.size()-1).setC(Color.red);
+			Object temp = new Object(0, 0, 0, 0, Color.white);
+			this.circles.add(temp);
+		}
+		else if(this.shape==Tri) {
+			
+		}
+
 	}
 
 	@Override
@@ -170,14 +226,33 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
-		g.setColor(this.nemos.get(this.cnt).getC());
-		g.drawRect(this.nemos.get(this.cnt).getX(), this.nemos.get(this.cnt).getY(), this.nemos.get(this.cnt).getW(), this.nemos.get(this.cnt).getH());
+		if(this.shape==Rect) {
+			Object t = this.nemos.get(this.nemos.size()-1);
+			g.setColor(t.getC());
+			g.drawRect(t.getX(), t.getY(), t.getW(), t.getH());		
+		}
+		else if(this.shape==Cir) {
+			Object t = this.circles.get(this.circles.size()-1);
+			g.setColor(t.getC());
+			g.drawRoundRect(t.getX(), t.getY(), t.getW(), t.getH(), t.getW(), t.getH());
+		}
+		else if(this.shape==Tri) {
+			
+		}
 		
 		if(this.nemos.size()>0) {
 			for(int i=0; i<this.nemos.size(); i++) {
 				Object t = this.nemos.get(i);
 				g.setColor(t.getC());
 				g.drawRect(t.getX(), t.getY(), t.getW(), t.getH());
+			}
+		}
+		
+		if(this.circles.size()>0) {
+			for(int i=0; i<this.circles.size(); i++) {
+				Object t = this.circles.get(i);
+				g.setColor(t.getC());
+				g.drawRoundRect(t.getX(), t.getY(), t.getW(), t.getH(), t.getW(), t.getH());
 			}
 		}
 		requestFocusInWindow();
@@ -203,6 +278,19 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 		if (e.getKeyCode() == e.VK_SHIFT) {
 			this.check = false;
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() instanceof JButton) {
+			JButton target = (JButton) e.getSource();
+			for(int i=0; i<this.btn.length; i++) {
+				if(this.btn[i]==target) {
+					this.shape = i;
+				}
+			}
+		}
+		
 	}
 }
 
