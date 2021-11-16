@@ -66,7 +66,7 @@ class NemoPanel extends JPanel implements MouseListener, MouseMotionListener{
 	}
 
 	private void setNemo() {
-		this.n = new NemoMove(SIZE/2-100, SIZE/2-100, 100, 100, Color.black);
+		this.n = new NemoMove(SIZE/2-100, SIZE/2-100, 100, 100, new Color (148, 218, 255));
 	}
 
 	@Override
@@ -79,12 +79,12 @@ class NemoPanel extends JPanel implements MouseListener, MouseMotionListener{
 	public void mousePressed(MouseEvent e) {
 		this.Mx = e.getX();
 		this.My = e.getY();
-		this.n.setC(Color.red);
+		this.n.setC(new Color (185, 131, 255));
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		this.n.setC(Color.black);
+		this.n.setC(new Color (148, 218, 255));
 	}
 
 	@Override
@@ -152,7 +152,7 @@ class NemoPanel extends JPanel implements MouseListener, MouseMotionListener{
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
 		g.setColor(this.n.getC());
-		g.drawRect(this.n.getX(), this.n.getY(), this.n.getW(), this.n.getH());
+		g.fillRect(this.n.getX(), this.n.getY(), this.n.getW(), this.n.getH());
 		requestFocusInWindow();
 		repaint();
 	}

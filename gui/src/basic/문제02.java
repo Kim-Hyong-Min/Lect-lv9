@@ -184,7 +184,7 @@ class MyJFrame extends JFrame implements ActionListener, Runnable {
 		finish = true;
 		jb.setText("ready");
 		re.setText("START");
-		re.setBackground(new Color(47, 221, 146));
+		re.setBackground(new Color(255, 146, 146));
 		reset();
 	}
 

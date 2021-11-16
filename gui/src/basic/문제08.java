@@ -115,7 +115,8 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 	private ArrayList<Object> nemos = new ArrayList<>();
 	private ArrayList<Object> circles = new ArrayList<>();
 	private ArrayList<sam> triangle = new ArrayList<>();
-	
+	private ArrayList <ArrayList<Object>> lines = new ArrayList<>();
+	private ArrayList<Object> line;
 	private int shape;
 	private final int Rect = 0;
 	private final int Cir = 1;
@@ -127,8 +128,8 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 	private int Dx;
 	private int Dy;
 	
-	String[] btnText = {"¡à","¡Û","¡â"};
-	JButton[] btn = new JButton[3];
+	String[] btnText = {"¡à","¡Û","¡â","/"};
+	JButton[] btn = new JButton[4];
 
 	public paintPanel() {
 		setLayout(null);
@@ -170,8 +171,8 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 			this.Dx = e.getX();
 			this.Dy = e.getY();
 			
-			int w = Math.abs(this.Mx - this.Dx);
-			int h = Math.abs(this.My - this.Dy);
+			int w = this.shape == Tri ? this.Mx - this.Dx : Math.abs(this.Mx - this.Dx);
+			int h = this.shape == Tri ? this.My - this.Dy : Math.abs(this.My - this.Dy);
 			
 			if(this.check)// shift
 				w = h;
@@ -179,12 +180,14 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 			int rX = this.Mx;
 			int rY = this.My;
 			
-			if(this.Dx < this.Mx) {
-				rX = this.Mx - w;
-			}
-			
-			if(this.Dy < this.My) {
-				rY = this.My - h;
+			if(this.shape != Tri) {
+				if(this.Dx < this.Mx) {
+					rX = this.Mx - w;
+				}
+				
+				if(this.Dy < this.My) {
+					rY = this.My - h;
+				}
 			}
 
 			if(this.shape==Rect) {
@@ -198,16 +201,19 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 			else if(this.shape==Tri) {
 				int[] xx = new int[3];
 				int[] yy = new int[3];
-				xx[0] = rX+w/2;
+				xx[0] = rX;
 				yy[0] = rY;
-				xx[1] = rX+w;
+				xx[1] = rX-w/2;
 				yy[1] = rY+h;
-				xx[2] = rX;
+				xx[2] = rX+w/2;
 				yy[2] = rY+h;
 				sam temp = new sam();
 				temp.setX(xx);
 				temp.setY(yy);
 				this.triangle.set(this.triangle.size()-1, temp);
+			}
+			else {
+				
 			}
 			
 		}
@@ -231,6 +237,7 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 		this.isRun = true;
 		this.Mx = e.getX();
 		this.My = e.getY();
+		this.line = new ArrayList<>();
 	}
 
 	@Override
@@ -248,9 +255,12 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 			this.circles.add(temp);
 		}
 		else if(this.shape==Tri) {
-			this.triangle.get(this.triangle.size()-1).setC(Color.pink);
+			this.triangle.get(this.triangle.size()-1).setC(Color.green);
 			sam temp = new sam();
 			this.triangle.add(temp);
+		}
+		else {
+			
 		}
 
 	}
@@ -271,6 +281,7 @@ class paintPanel extends JPanel implements MouseListener, MouseMotionListener, K
 	protected void paintComponent(Graphics g) {
 		// TODO Auto-generated method stub
 		super.paintComponent(g);
+		g.setColor(Color.black);
 		
 		if(this.shape==Rect) {
 			Object t = this.nemos.get(this.nemos.size()-1);

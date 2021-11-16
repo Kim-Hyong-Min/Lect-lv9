@@ -43,6 +43,7 @@ class dol extends JPanel implements ActionListener, Runnable {
 	public dol() {
 		setLayout(null);
 		setBounds(0, 0, 800, 800);
+		
 		setTurn();
 		setDol();
 		setReset();
@@ -139,27 +140,31 @@ class dol extends JPanel implements ActionListener, Runnable {
 		int num = 0;
 		for (int i = 0; i < MAX; i++) {
 			for (int j = 0; j <= MAX / 2; j++) {
-				if (this.check[i][j] == 1 && this.check[i][j + 1] == 1 && this.check[i][j + 2] == 1
-						&& this.check[i][j + 3] == 1 && this.check[i][j + 4] == 1) {
-					num = 1;
+				int check = 0;
+				for (int k = 0; k < MAX / 2; k++) {
+					check += this.check[i][j + k];
 				}
-				if (this.check[i][j] == -1 && this.check[i][j + 1] == -1 && this.check[i][j + 2] == -1
-						&& this.check[i][j + 3] == -1 && this.check[i][j + 4] == -1) {
+				if (check == 5) {
+					num = 1;
+					break;
+				} else if (check == -5) {
 					num = -1;
+					break;
 				}
 			}
 		}
 
 		if (num == 0) {
-			for (int i = 0; i <= MAX / 2; i++) { // 00 01 02 03 04 05
-				for (int j = 0; j < MAX; j++) {// 10 11 12 13 14 15
-					if (this.check[i][j] == 1 && this.check[i + 1][j] == 1 && this.check[i + 2][j] == 1
-							&& this.check[i + 3][j] == 1 && this.check[i + 4][j] == 1) {
+			for (int i = 0; i <= MAX / 2; i++) {
+				for (int j = 0; j < MAX; j++) {
+					int check = 0;
+					for (int k = 0; k < MAX / 2; k++) {
+						check += this.check[i + k][j];
+					}
+					if (check == 5) {
 						num = 1;
 						break;
-					}
-					if (this.check[i][j] == -1 && this.check[i + 1][j] == -1 && this.check[i + 2][j] == -1
-							&& this.check[i + 3][j] == -1 && this.check[i + 4][j] == -1) {
+					} else if (check == -5) {
 						num = -1;
 						break;
 					}
@@ -170,13 +175,14 @@ class dol extends JPanel implements ActionListener, Runnable {
 		if (num == 0) {
 			for (int i = 0; i <= MAX / 2; i++) {
 				for (int j = 0; j <= MAX / 2; j++) {
-					if (this.check[i][j] == 1 && this.check[i + 1][j + 1] == 1 && this.check[i + 2][j + 2] == 1
-							&& this.check[i + 3][j + 3] == 1 && this.check[i + 4][j + 4] == 1) {
+					int check = 0;
+					for (int k = 0; k < MAX / 2; k++) {
+						check += this.check[i + k][j + k];
+					}
+					if (check == 5) {
 						num = 1;
 						break;
-					}
-					if (this.check[i][j] == -1 && this.check[i + 1][j + 1] == -1 && this.check[i + 2][j + 2] == -1
-							&& this.check[i + 3][j + 3] == -1 && this.check[i + 4][j + 4] == -1) {
+					} else if (check == -5) {
 						num = -1;
 						break;
 					}
@@ -187,13 +193,14 @@ class dol extends JPanel implements ActionListener, Runnable {
 		if (num == 0) {
 			for (int i = 0; i <= MAX / 2; i++) {
 				for (int j = MAX - 1; j >= 4; j--) {
-					if (this.check[i][j] == 1 && this.check[i + 1][j - 1] == 1 && this.check[i + 2][j - 2] == 1
-							&& this.check[i + 3][j - 3] == 1 && this.check[i + 4][j - 4] == 1) {
+					int check = 0;
+					for (int k = 0; k < MAX / 2; k++) {
+						check += this.check[i + k][j - k];
+					}
+					if (check == 5) {
 						num = 1;
 						break;
-					}
-					if (this.check[i][j] == -1 && this.check[i + 1][j - 1] == -1 && this.check[i + 2][j - 2] == -1
-							&& this.check[i + 3][j - 3] == -1 && this.check[i + 4][j - 4] == -1) {
+					} else if (check == -5) {
 						num = -1;
 						break;
 					}
