@@ -17,6 +17,7 @@ public class Panel extends Util{
 	
 	private Map m = Map.instance;
 	private JButton reset = new JButton();
+	private JButton newGame = new JButton();
 	private JLabel text = new JLabel();
 	private JLabel timer = new JLabel();
 	
@@ -45,6 +46,7 @@ public class Panel extends Util{
 		setBounds(0, 0, 1000, 1000);
 		
 		setResetButton();
+		setNewGameButton();
 		setTimer();
 		setText();
 		addKeyListener(this);
@@ -53,6 +55,16 @@ public class Panel extends Util{
 	
 	
 	
+	private void setNewGameButton() {
+		this.newGame.setText("New Game");
+		this.newGame.setBounds(800, 40, 120, 30);
+		this.newGame.addActionListener(this);
+		add(this.newGame);
+	}
+
+
+
+
 	private void setText() {
 		this.text.setText("[조작법] 이동 : 상(↑) 하(↓) 좌(←) 우(→)");
 		this.text.setBounds(230, 900, 800, 60);
@@ -142,12 +154,15 @@ public class Panel extends Util{
 					if(rNum != this.level) {
 						if(rNum == 1) {
 							setLevel1();
+							this.level = 1;
 						}
 						if(rNum == 2) {
 							setLevel2();
+							this.level = 2;
 						}
 						if(rNum == 3) {
 							setLevel3();
+							this.level = 3;
 						}
 						break;
 					}
@@ -394,6 +409,15 @@ public class Panel extends Util{
 			if(this.level == 3) {
 				setLevel3();
 			}
+			this.ms = 0;
+			this.start = false;
+			this.win = false;
+			this.timer.setText("READY");
+		}
+		
+		if(this.newGame == e.getSource()) {
+			this.level = 1;
+			setLevel1();
 			this.ms = 0;
 			this.start = false;
 			this.timer.setText("READY");
