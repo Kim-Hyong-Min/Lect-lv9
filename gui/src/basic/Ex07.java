@@ -1,9 +1,11 @@
 package basic;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -11,8 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 class joinFrame extends JFrame{
 	
@@ -70,6 +75,8 @@ class ExPanel extends JPanel implements KeyListener, ActionListener{
 	// ㄴ 회원가입 정보는 Vector에 저장
 	
 	Vector<Vector<String>> users = new Vector<>();
+	Vector<String> colName = null;
+	
 	// User : Vector<String>
 	// ㄴ add(id) : 중복예외처리
 	// ㄴ add(pw)
@@ -82,6 +89,8 @@ class ExPanel extends JPanel implements KeyListener, ActionListener{
 	
 	joinFrame joinFrame = null;
 	
+	JTable table = null;
+	
 	public ExPanel() {
 		setLayout(null);
 		setBounds(0, 0, 400, 500);
@@ -89,16 +98,64 @@ class ExPanel extends JPanel implements KeyListener, ActionListener{
 //		setTextField();
 //		setTextArea();
 		
+		
+		setTable();
 		setButton();
+		
+		init();
+	}
+
+	private void init() { // 더미 데이터
+		Random rn = new Random();
+		
+		
+		String[] front = {"김","이","박","정","오"};
+		String[] back = {"성","지","우","아","희"};
+		String[] back2 = {"연","무","안","용","이"};
+		
+		
+		for(int i=0; i<100; i++) {
+			Vector<String> user = new Vector<>();
+			String name = front[rn.nextInt(front.length)] + back[rn.nextInt(back.length)] + back2[rn.nextInt(back2.length)];
+			user.add(name);
+			user.add(i+"");
+			user.add(i+"");
+			this.users.add(user);
+		}
+		
+	}
+
+	private void setTable() {
+		this.colName = new Vector();
+		this.colName.add("id");
+		this.colName.add("pw");
+		this.colName.add("name");
+		
+		// table 생성
+		table = new JTable(users, colName);
+		table.setBounds(50, 50, 300, 300);
+		
+		// table 꾸미기
+		table.setBorder(new LineBorder(Color.red));
+		table.setGridColor(Color.black);
+		
+//		add(table);
+		
+		// 스크롤 기능 추가 (데이터가 많을 시)
+		JScrollPane js = new JScrollPane(table);
+		js.setBounds(50, 50, 300, 300);
+		js.setAutoscrolls(true); // default
+		
+		add(js);
 	}
 
 	private void setButton() {
-		this.login.setBounds(100, 100, 100, 100);
+		this.login.setBounds(100, 380, 100, 50);
 		this.login.setText("login");
 		this.login.addActionListener(this);
 		add(this.login);
 		
-		this.join.setBounds(210, 100, 100, 100);
+		this.join.setBounds(210, 380, 100, 50);
 		this.join.setText("join");
 		this.join.addActionListener(this);
 		add(this.join);
@@ -154,6 +211,15 @@ class ExPanel extends JPanel implements KeyListener, ActionListener{
 		System.out.println("회원가입 완료!");
 		System.out.println("user.size() : "+this.users.size());
 		
+		table.revalidate(); // 테이블 갱신 
+		table.repaint(); // 테이블 갱신
+		
+		System.out.println("0 index ");
+		System.out.println(this.users.get(0));
+		System.out.println(this.users.get(1));
+		System.out.println(this.users.get(2));
+		
+		
 		this.joinFrame.dispose(); // 프레임에 대한 창 닫기
 		}
 		else {
@@ -205,6 +271,12 @@ public class Ex07 extends JFrame{
 		setBounds(100, 100, 400, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
+		
+		// Jframe 에는 Pane <- 프레임 교체법
+		// this.getContentPAne() -> 유리창 교체원리 this.setContentPane()
+		// 기존의 컴포넌트는 모두 날아간다
+		
+//		this.getContentPane().add(new ExPanel());
 		add(new ExPanel());
 		
 		setVisible(true);
