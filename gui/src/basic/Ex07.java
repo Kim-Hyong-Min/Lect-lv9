@@ -21,6 +21,8 @@ import javax.swing.border.LineBorder;
 
 class joinFrame extends JFrame{
 	
+	JLabel Label = new JLabel("text<br>text"); //JLabel 텍스트 줄바꿈
+	
 	JLabel idLabel = new JLabel("id: ");
 	JLabel pwLabel = new JLabel("pw: ");
 	JLabel nameLabel = new JLabel("name: ");
