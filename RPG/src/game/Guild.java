@@ -127,7 +127,7 @@ public class Guild {
 	
 	
 	public void guildSet(){ // 길드 아이템 리스트
-		this.gulidName = "그린컴퓨터";
+		this.gulidName = "RPG 게임";
 		this.guildMoney = 100000;
 	}
 	
